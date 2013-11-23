@@ -38,7 +38,7 @@ public class BdClientes extends Bd.bd {
             ps.setString(12, cliente.getDatacadastro());
             ps.execute();
             
-        }catch (Exception e){
+        }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
             
         }
