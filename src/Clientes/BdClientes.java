@@ -43,4 +43,27 @@ public class BdClientes extends Bd.bd {
             
         }
     }
+    
+    public void atualiza(Cliente cliente){
+        String sql = "update clientes set nome=?, cpf=?, rg=?, telefone = ?, Celular=?, endereco=?, bairro=?, cep=?, cidade=?, estado=?, complemento=? where codigo=?";
+        try{
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, cliente.getNome());
+            ps.setString(2, cliente.getCpf());
+            ps.setString(3, cliente.getRg());
+            ps.setString(4, cliente.getTelefone());
+            ps.setString(5, cliente.getCelular());
+            ps.setString(6, cliente.getEndereco());
+            ps.setString(7, cliente.getBairro());
+            ps.setString(8, cliente.getCep());
+            ps.setString(9, cliente.getCidade());
+            ps.setString(10, cliente.getEstado());
+            ps.setString(11, cliente.getComplemento());
+            ps.setInt(12, (cliente.getCodigo()));
+            ps.execute();
+            
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }    
+    }
 }

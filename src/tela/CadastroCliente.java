@@ -5,17 +5,70 @@
  */
 package tela;
 
+
+import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 /**
  *
  * @author robson
  */
-public class CadastroCliente extends javax.swing.JFrame {
+import Clientes.Cliente;
 
+public class CadastroCliente extends javax.swing.JFrame {
+    private Cliente cliente = new Cliente();
+    private boolean novo = true;
+    Clientes.BdClientes bd;
+    
+    private String getDateTime(){
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+    
+     private void telaToCliente(){
+         //cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
+         cliente.setNome(txtNome.getText());
+         cliente.setCpf(txtCPF.getText());
+         cliente.setRg(txtRG.getText());
+         cliente.setTelefone(txtFixo.getText());
+         cliente.setCelular(txtCelular.getText());
+         cliente.setEndereco(txtEndereco.getText());
+         cliente.setBairro(txtBairro.getText());
+         cliente.setCep(txtCEP.getText());
+         cliente.setCidade(txtCidade.getText());
+         cliente.setEstado(txtEstado.getText());
+         cliente.setComplemento(txtComplemento.getText());
+         cliente.setDatacadastro(getDateTime());
+     
+     }
+     
+     private void clienteToTela(){
+         txtCodigo.setText(Integer.toString(cliente.getCodigo()));
+         txtNome.setText(cliente.getNome());
+         txtCPF.setText(cliente.getCpf());
+         txtRG.setText(cliente.getRg());
+         txtFixo.setText(cliente.getTelefone());
+         txtCelular.setText(cliente.getCelular());
+         txtEndereco.setText(cliente.getEndereco());
+         txtBairro.setText(cliente.getBairro());
+         txtCEP.setText(cliente.getCep());
+         txtCidade.setText(cliente.getCidade());
+         txtEstado.setText(cliente.getEstado());
+         txtComplemento.setText(cliente.getComplemento());
+         txtData.setText(cliente.getDatacadastro());
+                
+                 
+     }
     /**
      * Creates new form CadastroCliente
      */
     public CadastroCliente() {
         initComponents();
+        bd = new Clientes.BdClientes();
+        if(novo){
+            txtData.setText(getDateTime());
+        }
     }
 
     /**
@@ -53,6 +106,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         txtCelular = new javax.swing.JFormattedTextField();
         txtCEP = new javax.swing.JFormattedTextField();
         txtCPF = new javax.swing.JFormattedTextField();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,6 +137,8 @@ public class CadastroCliente extends javax.swing.JFrame {
 
         jLabel15.setText("Complemento");
 
+        txtCodigo.setEditable(false);
+        txtCodigo.setFocusable(false);
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoActionPerformed(evt);
@@ -149,6 +206,20 @@ public class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -184,7 +255,11 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(txtBairro)
                     .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                     .addComponent(txtEndereco))
-                .addContainerGap(253, Short.MAX_VALUE))
+                .addGap(24, 24, 24)
+                .addComponent(btnSalvar)
+                .addGap(35, 35, 35)
+                .addComponent(btnCancelar)
+                .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,6 +317,12 @@ public class CadastroCliente extends javax.swing.JFrame {
                     .addComponent(jLabel6)
                     .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(31, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
+                    .addComponent(btnCancelar))
+                .addContainerGap())
         );
 
         pack();
@@ -270,6 +351,20 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCPFActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        telaToCliente();
+        if (novo){
+            bd.insere(cliente);
+        } else {
+            bd.atualiza(cliente);
+        }
+        this.dispose();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -308,6 +403,8 @@ public class CadastroCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
