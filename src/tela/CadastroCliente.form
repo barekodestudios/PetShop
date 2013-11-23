@@ -41,35 +41,6 @@
                   <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-<<<<<<< HEAD
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="txtCelular" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtFixo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtRG" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtCodigo" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtCPF" alignment="0" pref="181" max="32767" attributes="0"/>
-                          <Component id="txtComplemento" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtCEP" alignment="0" pref="181" max="32767" attributes="0"/>
-                          <Component id="txtEstado" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtCidade" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtBairro" alignment="0" max="32767" attributes="0"/>
-                          <Component id="txtNome" pref="181" max="32767" attributes="0"/>
-                          <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="txtData" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace pref="113" max="32767" attributes="0"/>
-                      <Component id="btnSalvar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
-                      <Component id="btnCancelar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-=======
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="txtData" min="-2" pref="100" max="-2" attributes="0"/>
                   <Component id="txtCelular" alignment="0" max="32767" attributes="0"/>
@@ -86,7 +57,6 @@
                   <Component id="txtEndereco" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace pref="253" max="32767" attributes="0"/>
->>>>>>> 71c6781a2c37549b075e87dc83017d0d493ec9dd
           </Group>
       </Group>
     </DimensionLayout>
@@ -153,33 +123,12 @@
                   <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtComplemento" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-<<<<<<< HEAD
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-=======
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="txtData" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="31" max="32767" attributes="0"/>
->>>>>>> 71c6781a2c37549b075e87dc83017d0d493ec9dd
           </Group>
       </Group>
     </DimensionLayout>
@@ -251,14 +200,6 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCodigo">
-<<<<<<< HEAD
-      <Properties>
-        <Property name="editable" type="boolean" value="false"/>
-        <Property name="focusable" type="boolean" value="false"/>
-        <Property name="opaque" type="boolean" value="false"/>
-      </Properties>
-=======
->>>>>>> 71c6781a2c37549b075e87dc83017d0d493ec9dd
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodigoActionPerformed"/>
       </Events>
@@ -332,24 +273,5 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCPFActionPerformed"/>
       </Events>
     </Component>
-<<<<<<< HEAD
-    <Component class="javax.swing.JButton" name="btnSalvar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Salvar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnCancelar">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Cancelar"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
-      </Events>
-    </Component>
-=======
->>>>>>> 71c6781a2c37549b075e87dc83017d0d493ec9dd
   </SubComponents>
 </Form>
