@@ -29,9 +29,25 @@ public class BdUsuarios extends Bd.bd{
             ps.setString(4, usuario.getLogin());
             ps.setString(5, usuario.getSenha());
             ps.execute();
-        }catch (Exception e){
+        }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
         }
     }
     
+    public void atualiza(Usuario usuario){
+        String sql = "update usuarios set nome=?, email=?, tipo=?, login=?, senha=? where codigo=?";
+        try{
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setString(1, usuario.getNome());
+            ps.setString(2, usuario.getEmail());
+            ps.setString(3, usuario.getTipo());
+            ps.setString(4, usuario.getLogin());
+            ps.setString(5, usuario.getSenha());
+            ps.setInt(6, usuario.getCodigo());
+            ps.execute();
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        
+    }
 }

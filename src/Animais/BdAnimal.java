@@ -7,9 +7,11 @@ package Animais;
 
 /**
  *
- * @author robson
+ * @author robson   
  */
+import java.awt.List;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class BdAnimal extends Bd.bd {
     public BdAnimal(){
@@ -48,5 +50,39 @@ public class BdAnimal extends Bd.bd {
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
         }
+    }
+    
+    public void excluir(int codigo){
+        String sql = "delete from animais where codigo=?";
+        try{
+            Statement st = getCon().createStatement();
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.execute();            
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+    }
+    
+    public ArrayList pesquisa(String busca){
+        String sql = "select * from animais where dono '%" + busca + "%'";
+        ArrayList lista = new ArrayList();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                Animal registro = new Animal();
+                registro.setCodigo(rs.getInt("codigo"));
+                registro.setNome(rs.getString("nome"));
+                registro.setRaca(rs.getString("raca"));
+                registro.setIdade(rs.getInt("idade"));
+                registro.setPorte(rs.getString("porte"));
+                registro.setDono(rs.getInt("dono"));
+                lista.add(registro);
+            }           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        return lista;
     }
 }

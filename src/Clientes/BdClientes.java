@@ -9,7 +9,9 @@ package Clientes;
  *
  * @author robson
  */
+import java.awt.List;
 import java.sql.*;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 public class BdClientes extends Bd.bd {
     public BdClientes(){
@@ -66,4 +68,47 @@ public class BdClientes extends Bd.bd {
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
         }    
     }
+    
+    public void exclui(int codigo){
+        String sql = "delete from clientes where codigo=?";
+        try{
+            Statement st = getCon().createStatement();
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.execute();
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+    }
+    
+    public ArrayList pesquisa(String busca){
+        String sql = "select * from clientes where nome '%" + busca + "%'";
+        ArrayList lista = new ArrayList();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while (rs.next()){
+                Cliente registro = new Cliente();
+                registro.setCodigo(rs.getInt("codigo"));
+                registro.setNome(rs.getString("nome"));
+                registro.setCpf(rs.getString("cpf"));
+                registro.setRg(rs.getString("rg"));
+                registro.setTelefone(rs.getString("telefone"));
+                registro.setCelular(rs.getString("celular"));
+                registro.setEndereco(rs.getString("endereco"));
+                registro.setBairro(rs.getString("bairro"));
+                registro.setCep(rs.getString("cep"));
+                registro.setCidade(rs.getString("cidade"));
+                registro.setEstado(rs.getString("estado"));
+                registro.setComplemento(rs.getString("complemento"));
+                registro.setDatacadastro(rs.getString("datacadastro"));
+                
+                lista.add(registro);
+            }
+        }catch (SQLException e){
+            
+        }
+        return lista;
+    }
+    
 }
