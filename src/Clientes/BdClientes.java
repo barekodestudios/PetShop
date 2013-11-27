@@ -9,6 +9,7 @@ package Clientes;
  *
  * @author robson
  */
+import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -81,7 +82,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public ArrayList pesquisa(String busca){
-        String sql = "select * from clientes where nome like '%" + busca + "%'";
+        String sql = "select * from clientes where nome like  '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -105,9 +106,24 @@ public class BdClientes extends Bd.bd {
                 lista.add(registro);
             }
         }catch (SQLException e){
-            
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
         }
         return lista;
+    }
+    
+    public Cliente localizaNomeCodigo(String nome){
+        String sql = "select * from clientes where nome='" + nome + "'";
+        Cliente registro = new Cliente();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setCodigo(rs.getInt("codigo"));
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    
+        }
+        return registro;
     }
     
 }

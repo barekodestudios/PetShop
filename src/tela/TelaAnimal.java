@@ -6,17 +6,32 @@
 
 package tela;
 
+import Clientes.BdClientes;
+import Clientes.Cliente;
+import java.util.ArrayList;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 /**
  *
  * @author Rafael
  */
 public class TelaAnimal extends javax.swing.JFrame {
-
+    BdClientes bd = new BdClientes();
     /**
      * Creates new form TelaAnimal
      */
     public TelaAnimal() {
         initComponents();
+        preencheCombo();
+    }
+    public void preencheCombo(){
+        ArrayList c = bd.pesquisa(""); 
+        for (Iterator it = c.iterator(); it.hasNext();) { 
+            Clientes.Cliente a = (Cliente) it.next(); 
+            comboCliente.addItem(a.getNome());
+            
+        }
+        
     }
 
     /**
@@ -30,12 +45,19 @@ public class TelaAnimal extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         comboCliente = new javax.swing.JComboBox();
+        tCodigoCliente = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Cliente");
 
-        comboCliente.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboCliente.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                comboClienteItemStateChanged(evt);
+            }
+        });
+
+        tCodigoCliente.setText("jTextField1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -45,8 +67,10 @@ public class TelaAnimal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(356, Short.MAX_VALUE))
+                .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64)
+                .addComponent(tCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(171, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -54,12 +78,19 @@ public class TelaAnimal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tCodigoCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(498, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void comboClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboClienteItemStateChanged
+        Cliente cliente = bd.localizaNomeCodigo((String) comboCliente.getSelectedItem());
+        tCodigoCliente.setText(Integer.toString(cliente.getCodigo()));
+       
+    }//GEN-LAST:event_comboClienteItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -99,5 +130,6 @@ public class TelaAnimal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox comboCliente;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JTextField tCodigoCliente;
     // End of variables declaration//GEN-END:variables
 }
