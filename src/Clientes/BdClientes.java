@@ -9,7 +9,6 @@ package Clientes;
  *
  * @author robson
  */
-import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -82,7 +81,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public ArrayList pesquisa(String busca){
-        String sql = "select * from clientes where nome '%" + busca + "%'";
+        String sql = "select * from clientes where nome like '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
