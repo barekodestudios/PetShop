@@ -18,7 +18,6 @@ import Usuarios.Usuario;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.mail.Authenticator;
 import javax.swing.JOptionPane;
 import org.apache.commons.mail.DefaultAuthenticator;
 import org.apache.commons.mail.EmailException;
@@ -182,8 +181,9 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void sendEmail(String mail, String login, String senha) throws EmailException{
+        boolean erro;
+        try{
             SimpleEmail email = new SimpleEmail();
-            email.setDebug(true);
             email.setHostName("smtp.gmail.com");
             email.addTo(mail);
             email.setFrom("psquatropatas@gmail.com", "Sistema PetShop");
@@ -199,10 +199,16 @@ public class TelaLogin extends javax.swing.JFrame {
             email.getMailSession().getProperties().put("mail.smtp.socketFactory.class",   "javax.net.ssl.SSLSocketFactory");
             email.getMailSession().getProperties().put("mail.smtp.socketFactory.fallback", "false");
             email.getMailSession().getProperties().put("mail.smtp.starttls.enable", "true");
-
             email.send();
+        } catch (EmailException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao enviar!\n" +ex.getMessage());
+            erro = true;
+            
+        }
+        if(erro = false){
+            JOptionPane.showMessageDialog(null, "Email enviado com sucesso!!");
         
-        
+        }
     }
     
     /**
