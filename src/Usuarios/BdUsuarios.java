@@ -9,7 +9,6 @@ package Usuarios;
  *
  * @author robson
  */
-import Clientes.Cliente;
 import java.sql.*;
 import javax.swing.JOptionPane;
 public class BdUsuarios extends Bd.bd{
@@ -59,6 +58,24 @@ public class BdUsuarios extends Bd.bd{
             Statement st = getCon().createStatement();
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
+                registro.setLogin(rs.getString("login"));
+                registro.setSenha(rs.getString("senha"));
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        
+        return registro;
+    }
+    
+    public Usuario localizaMail(String email){
+        String sql = "select email,login,senha from usuarios where email = '" + email + "'";
+        Usuarios.Usuario registro = new Usuario();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setEmail(rs.getString("email"));
                 registro.setLogin(rs.getString("login"));
                 registro.setSenha(rs.getString("senha"));
             }

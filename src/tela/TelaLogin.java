@@ -10,17 +10,31 @@ package tela;
  *
  * @author robson
  */
+
+
 import Usuarios.BdUsuarios;
 import Usuarios.Usuario;
+
+import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.Authenticator;
 import javax.swing.JOptionPane;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.EmailException;
+import org.apache.commons.mail.SimpleEmail;
 public class TelaLogin extends javax.swing.JFrame {
     BdUsuarios bd = new BdUsuarios();
     /**
      * Creates new form TelaLogin
      */
     public TelaLogin() {
+       
         initComponents();
     }
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -39,12 +53,25 @@ public class TelaLogin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(0, 0));
         setResizable(false);
 
         jLabel1.setText("Login:");
 
         jLabel2.setText("Senha:");
+
+        tLogin.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tLoginKeyPressed(evt);
+            }
+        });
+
+        tSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tSenhaKeyPressed(evt);
+            }
+        });
 
         jButton1.setText("Entrar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +81,11 @@ public class TelaLogin extends javax.swing.JFrame {
         });
 
         jButton2.setText("Esqueci minha Senha");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,7 +127,10 @@ public class TelaLogin extends javax.swing.JFrame {
                 .addContainerGap(19, Short.MAX_VALUE))
         );
 
+        getAccessibleContext().setAccessibleDescription("");
+
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -109,6 +144,67 @@ public class TelaLogin extends javax.swing.JFrame {
         }       
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void tLoginKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tLoginKeyPressed
+        int tecla = evt.getKeyCode();
+        if( tecla == KeyEvent.VK_ENTER){
+            tLogin.setFocusable(false);
+            tSenha.setFocusable(true);
+            
+        }
+    }//GEN-LAST:event_tLoginKeyPressed
+
+    private void tSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tSenhaKeyPressed
+        int tecla = evt.getKeyCode();
+        if( tecla == KeyEvent.VK_ENTER){
+            Usuario result = bd.localiza(tLogin.getText(), String.valueOf(tSenha.getPassword()));
+            if(tLogin.getText().equals(result.getLogin()) & String.valueOf(tSenha.getPassword()).equals(result.getSenha())){
+                MenuPrincipal t = new MenuPrincipal();
+                t.setVisible(true);
+                this.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Login ou Senha incorreto!");
+            }
+        }
+    }//GEN-LAST:event_tSenhaKeyPressed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        String email = JOptionPane.showInputDialog("Digite o e-mail cadastrado em sua conta, lembre-se você precisará dele para recuperar sua senha");
+        Usuario result = bd.localizaMail(email);
+        if(result.getEmail() == null && result.getLogin() == null && result.getSenha() == null){
+            JOptionPane.showMessageDialog(null, "Digite um E-mail válido!");
+        } else {
+            try {
+                sendEmail(result.getEmail(), result.getLogin(), result.getSenha());
+            } catch (EmailException ex) {
+                Logger.getLogger(TelaLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void sendEmail(String mail, String login, String senha) throws EmailException{
+            SimpleEmail email = new SimpleEmail();
+            email.setDebug(true);
+            email.setHostName("smtp.gmail.com");
+            email.addTo(mail);
+            email.setFrom("psquatropatas@gmail.com", "Sistema PetShop");
+            email.setSubject("Recuperação de Senha do Sistema");
+            email.setMsg("Seu Login é:" + login + "\n Sua Senha é:" + senha);
+            email.setSmtpPort(465);
+            //email.setAuthentication("robsonjean96@gmail.com", "09142311");
+            email.setAuthenticator(new DefaultAuthenticator("psquatropatas@gmail.com", "4pataspet"));
+            email.getMailSession().getProperties().put("mail.smtp.auth", "true");
+            email.getMailSession().getProperties().put("mail.debug", "true");
+            email.getMailSession().getProperties().put("mail.smtp.port", "465");
+            email.getMailSession().getProperties().put("mail.smtp.socketFactory.port", "465");
+            email.getMailSession().getProperties().put("mail.smtp.socketFactory.class",   "javax.net.ssl.SSLSocketFactory");
+            email.getMailSession().getProperties().put("mail.smtp.socketFactory.fallback", "false");
+            email.getMailSession().getProperties().put("mail.smtp.starttls.enable", "true");
+
+            email.send();
+        
+        
+    }
+    
     /**
      * @param args the command line arguments
      */
