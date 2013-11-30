@@ -28,35 +28,35 @@ public class CadastroCliente extends javax.swing.JFrame {
     
      private void telaToCliente(){
          //cliente.setCodigo(Integer.parseInt(txtCodigo.getText()));
-         cliente.setNome(txtNome.getText());
-         cliente.setCpf(txtCPF.getText());
-         cliente.setRg(txtRG.getText());
-         cliente.setTelefone(txtFixo.getText());
-         cliente.setCelular(txtCelular.getText());
-         cliente.setEndereco(txtEndereco.getText());
-         cliente.setBairro(txtBairro.getText());
-         cliente.setCep(txtCEP.getText());
-         cliente.setCidade(txtCidade.getText());
-         cliente.setEstado(txtEstado.getText());
-         cliente.setComplemento(txtComplemento.getText());
-         cliente.setDatacadastro(getDateTime());
+         getCliente().setNome(txtNome.getText());
+         getCliente().setCpf(txtCPF.getText());
+         getCliente().setRg(txtRG.getText());
+         getCliente().setTelefone(txtFixo.getText());
+         getCliente().setCelular(txtCelular.getText());
+         getCliente().setEndereco(txtEndereco.getText());
+         getCliente().setBairro(txtBairro.getText());
+         getCliente().setCep(txtCEP.getText());
+         getCliente().setCidade(txtCidade.getText());
+         getCliente().setEstado(txtEstado.getText());
+         getCliente().setComplemento(txtComplemento.getText());
+         getCliente().setDatacadastro(getDateTime());
      
      }
      
      private void clienteToTela(){
-         txtCodigo.setText(Integer.toString(cliente.getCodigo()));
-         txtNome.setText(cliente.getNome());
-         txtCPF.setText(cliente.getCpf());
-         txtRG.setText(cliente.getRg());
-         txtFixo.setText(cliente.getTelefone());
-         txtCelular.setText(cliente.getCelular());
-         txtEndereco.setText(cliente.getEndereco());
-         txtBairro.setText(cliente.getBairro());
-         txtCEP.setText(cliente.getCep());
-         txtCidade.setText(cliente.getCidade());
-         txtEstado.setText(cliente.getEstado());
-         txtComplemento.setText(cliente.getComplemento());
-         txtData.setText(cliente.getDatacadastro());
+         txtCodigo.setText(Integer.toString(getCliente().getCodigo()));
+         txtNome.setText(getCliente().getNome());
+         txtCPF.setText(getCliente().getCpf());
+         txtRG.setText(getCliente().getRg());
+         txtFixo.setText(getCliente().getTelefone());
+         txtCelular.setText(getCliente().getCelular());
+         txtEndereco.setText(getCliente().getEndereco());
+         txtBairro.setText(getCliente().getBairro());
+         txtCEP.setText(getCliente().getCep());
+         txtCidade.setText(getCliente().getCidade());
+         txtEstado.setText(getCliente().getEstado());
+         txtComplemento.setText(getCliente().getComplemento());
+         txtData.setText(getCliente().getDatacadastro());
                 
                  
      }
@@ -352,10 +352,10 @@ public class CadastroCliente extends javax.swing.JFrame {
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         telaToCliente();
-        if (novo){
-            bd.insere(cliente);
+        if (isNovo()){
+            bd.insere(getCliente());
         } else {
-            bd.atualiza(cliente);
+            bd.atualiza(getCliente());
         }
         this.dispose();
     }//GEN-LAST:event_btnSalvarActionPerformed
@@ -430,4 +430,33 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtRG;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the cliente
+     */
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    /**
+     * @param cliente the cliente to set
+     */
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+        clienteToTela();
+    }
+
+    /**
+     * @return the novo
+     */
+    public boolean isNovo() {
+        return novo;
+    }
+
+    /**
+     * @param novo the novo to set
+     */
+    public void setNovo(boolean novo) {
+        this.novo = novo;
+    }
 }

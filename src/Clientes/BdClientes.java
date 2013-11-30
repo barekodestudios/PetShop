@@ -111,6 +111,21 @@ public class BdClientes extends Bd.bd {
         return lista;
     }
     
+    public Cliente localizaCodigoNome(int codigo){
+        String sql = "select * from clientes where nome='" + codigo + "'";
+        Cliente registro = new Cliente();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setCodigo(rs.getInt("nome"));
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    
+        }
+        return registro;
+    }
+    
     public Cliente localizaNomeCodigo(String nome){
         String sql = "select * from clientes where nome='" + nome + "'";
         Cliente registro = new Cliente();
