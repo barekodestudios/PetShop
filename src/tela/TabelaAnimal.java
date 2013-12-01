@@ -6,46 +6,40 @@
 
 package tela;
 
-import Clientes.Cliente;
-import javax.swing.table.DefaultTableModel;
-import Clientes.BdClientes;
+import Animais.Animal;
+import Animais.BdAnimal;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Iterator;
-
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Rafael
+ * @author robson
  */
-
-public class TabelaClientes extends javax.swing.JFrame {
-    BdClientes bd = new BdClientes();
-    
+public class TabelaAnimal extends javax.swing.JFrame {
+    BdAnimal bd = new BdAnimal();
     /**
-     * Creates new form TabelaClientes
+     * Creates new form TabelaAnimal
      */
-    public TabelaClientes() {
+    public TabelaAnimal() {
         initComponents();
         preencheTabela();
-        
     }
+    
     private void preencheTabela() { 
-        DefaultTableModel modelo = (DefaultTableModel) tClientes.getModel(); 
+        DefaultTableModel modelo = (DefaultTableModel) tAnimais.getModel(); 
         int i = modelo.getRowCount(); 
         while (i-- > 0) { 
             modelo.removeRow(i); 
         } 
         ArrayList c = bd.pesquisa(tFiltro.getText()); 
         for (Iterator it = c.iterator(); it.hasNext();) { 
-            Clientes.Cliente a = (Cliente) it.next(); 
-            modelo.addRow(new Object[]{a.getNome(), a.getRg(), a.getCpf(), 
-            a.getTelefone(), a.getCelular(), a.getEndereco(), a.getBairro(),
-            a.getCidade(), a.getEstado(),a.getCep(), a.getComplemento(), a.getDatacadastro(),
-            a.getCodigo()});
+            Animais.Animal a = (Animal) it.next(); 
+            modelo.addRow(new Object[]{a.getNome(), a.getRaca(), a.getIdade(), 
+            a.getPorte(), a.getNameDono(), a.getCodigo()});
         }
     }
-                    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,10 +54,9 @@ public class TabelaClientes extends javax.swing.JFrame {
         tFiltro = new javax.swing.JTextField();
         bFiltro = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tClientes = new javax.swing.JTable();
+        tAnimais = new javax.swing.JTable();
 
-        setTitle("Clientes cadastrados");
-        setName(""); // NOI18N
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Pesquisar");
 
@@ -87,44 +80,31 @@ public class TabelaClientes extends javax.swing.JFrame {
             }
         });
 
-        tClientes.setModel(new javax.swing.table.DefaultTableModel(
+        tAnimais.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "R.G.", "CPF", "Tel. Fixo", "Celular", "Endereço", "Bairro", "Cidade", "Estado", "CEP", "Complemento", "Data de cadastro", "Código"
+                "Nome", "Raca", "Idade", "Porte", "Dono", "Código"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, true, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        tClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        tAnimais.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseReleased(java.awt.event.MouseEvent evt) {
-                tClientesMouseReleased(evt);
+                tAnimaisMouseReleased(evt);
             }
         });
-        jScrollPane2.setViewportView(tClientes);
-        if (tClientes.getColumnModel().getColumnCount() > 0) {
-            tClientes.getColumnModel().getColumn(6).setHeaderValue("Bairro");
-            tClientes.getColumnModel().getColumn(7).setResizable(false);
-            tClientes.getColumnModel().getColumn(7).setHeaderValue("Cidade");
-            tClientes.getColumnModel().getColumn(8).setResizable(false);
-            tClientes.getColumnModel().getColumn(8).setHeaderValue("Estado");
-            tClientes.getColumnModel().getColumn(9).setResizable(false);
-            tClientes.getColumnModel().getColumn(9).setHeaderValue("CEP");
-            tClientes.getColumnModel().getColumn(10).setResizable(false);
-            tClientes.getColumnModel().getColumn(10).setHeaderValue("Complemento");
-            tClientes.getColumnModel().getColumn(11).setHeaderValue("Data de cadastro");
-            tClientes.getColumnModel().getColumn(12).setHeaderValue("Código");
-        }
+        jScrollPane2.setViewportView(tAnimais);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -138,7 +118,7 @@ public class TabelaClientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(bFiltro)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,10 +128,8 @@ public class TabelaClientes extends javax.swing.JFrame {
                     .addComponent(tFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bFiltro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE))
         );
-
-        getAccessibleContext().setAccessibleName("");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -162,26 +140,26 @@ public class TabelaClientes extends javax.swing.JFrame {
 
     private void bFiltroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bFiltroActionPerformed
         // TODO add your handling code here:
-        preencheTabela();
+      
     }//GEN-LAST:event_bFiltroActionPerformed
 
-    private void jScrollPane2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseReleased
-       
-    }//GEN-LAST:event_jScrollPane2MouseReleased
-
-    private void tClientesMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tClientesMouseReleased
+    private void tAnimaisMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tAnimaisMouseReleased
         if(evt.getClickCount() == 2){
             Point p = evt.getPoint();
-            int row = tClientes.rowAtPoint(p);
-            int col = tClientes.columnAtPoint(p);
-            DefaultTableModel modelo = (DefaultTableModel) tClientes.getModel();
-            int codigo = (Integer) modelo.getValueAt(row, 12);
-            CadastroCliente t = new CadastroCliente();
+            int row = tAnimais.rowAtPoint(p);
+            int col = tAnimais.columnAtPoint(p);
+            DefaultTableModel modelo = (DefaultTableModel) tAnimais.getModel();
+            int codigo = (Integer) modelo.getValueAt(row, 5);
+            CadastroAnimal t = new CadastroAnimal();
             t.setNovo(false);
-            t.setCliente(bd.localiza(codigo));
+            t.setAnimal(bd.localiza(codigo));
             t.setVisible(true);
         }
-    }//GEN-LAST:event_tClientesMouseReleased
+    }//GEN-LAST:event_tAnimaisMouseReleased
+
+    private void jScrollPane2MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseReleased
+
+    }//GEN-LAST:event_jScrollPane2MouseReleased
 
     /**
      * @param args the command line arguments
@@ -200,20 +178,20 @@ public class TabelaClientes extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TabelaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TabelaAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TabelaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TabelaAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TabelaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TabelaAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TabelaClientes.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TabelaAnimal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TabelaClientes().setVisible(true);
+                new TabelaAnimal().setVisible(true);
             }
         });
     }
@@ -222,7 +200,7 @@ public class TabelaClientes extends javax.swing.JFrame {
     private javax.swing.JButton bFiltro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable tClientes;
+    private javax.swing.JTable tAnimais;
     private javax.swing.JTextField tFiltro;
     // End of variables declaration//GEN-END:variables
 }

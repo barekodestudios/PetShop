@@ -16,6 +16,7 @@ public class Animal {
     private int idade;
     private String porte;
     private int dono;
+    private String nameDono;
 
     /**
      * @return the codigo
@@ -99,5 +100,19 @@ public class Animal {
      */
     public void setDono(int dono) {
         this.dono = dono;
+    }
+
+    /**
+     * @return the nameDono
+     */
+    public String getNameDono() {
+        return nameDono;
+    }
+
+    /**
+     * @param nameDono the nameDono to set
+     */
+    public void setNameDono(String nameDono) {
+        this.nameDono = nameDono;
     }
 }

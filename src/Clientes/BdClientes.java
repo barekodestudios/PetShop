@@ -112,13 +112,13 @@ public class BdClientes extends Bd.bd {
     }
     
     public Cliente localizaCodigoNome(int codigo){
-        String sql = "select * from clientes where nome='" + codigo + "'";
+        String sql = "select * from clientes where codigo='" + codigo + "'";
         Cliente registro = new Cliente();
         try{
             Statement st = getCon().createStatement();
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
-                registro.setCodigo(rs.getInt("nome"));
+                registro.setNome(rs.getString("nome"));
             }
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    
@@ -140,5 +140,33 @@ public class BdClientes extends Bd.bd {
         }
         return registro;
     }
+    
+     public Cliente localiza(int codigo){
+        String sql = "select * from clientes where codigo='" + codigo + "'";
+        Cliente registro = new Cliente();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setCodigo(rs.getInt("codigo"));
+                registro.setNome(rs.getString("nome"));
+                registro.setCpf(rs.getString("cpf"));
+                registro.setRg(rs.getString("rg"));
+                registro.setTelefone(rs.getString("telefone"));
+                registro.setCelular(rs.getString("celular"));
+                registro.setEndereco(rs.getString("endereco"));
+                registro.setBairro(rs.getString("bairro"));
+                registro.setCep(rs.getString("cep"));
+                registro.setCidade(rs.getString("cidade"));
+                registro.setEstado(rs.getString("estado"));
+                registro.setComplemento(rs.getString("complemento"));
+                registro.setDatacadastro(rs.getString("datacadastro"));
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    
+        }
+        return registro;
+    }
+    
     
 }

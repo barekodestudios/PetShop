@@ -9,6 +9,7 @@ package Animais;
  *
  * @author robson   
  */
+import Clientes.BdClientes;
 import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
@@ -65,7 +66,8 @@ public class BdAnimal extends Bd.bd {
     }
     
     public ArrayList pesquisa(String busca){
-        String sql = "select * from animais where dono '%" + busca + "%'";
+        BdClientes bdc= new BdClientes();
+        String sql = "select * from animais where dono like '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -77,12 +79,33 @@ public class BdAnimal extends Bd.bd {
                 registro.setRaca(rs.getString("raca"));
                 registro.setIdade(rs.getInt("idade"));
                 registro.setPorte(rs.getString("porte"));
-                registro.setDono(rs.getInt("dono"));
+                Clientes.Cliente result = bdc.localizaCodigoNome(rs.getInt("dono"));
+                registro.setNameDono(result.getNome());
                 lista.add(registro);
             }           
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
         }
         return lista;
+    }
+    
+    public Animal localiza(int codigo){
+        String sql = "select * from animais where codigo ='" + codigo +"'";
+        Animal registro = new Animal();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setNome(rs.getString("nome"));
+                registro.setRaca(rs.getString("raca"));
+                registro.setIdade(rs.getInt("idade"));
+                registro.setPorte(rs.getString("porte"));
+                registro.setDono(rs.getInt("dono"));
+                registro.setCodigo(rs.getInt("codigo"));
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        return registro;
     }
 }
