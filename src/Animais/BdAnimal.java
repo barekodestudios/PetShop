@@ -67,7 +67,7 @@ public class BdAnimal extends Bd.bd {
     
     public ArrayList pesquisa(String busca){
         BdClientes bdc= new BdClientes();
-        String sql = "select * from animais where dono like '%" + busca + "%'";
+        String sql = "select * from animais where nome like '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -108,4 +108,47 @@ public class BdAnimal extends Bd.bd {
         }
         return registro;
     }
+    
+    
+    public ArrayList pesquisaPorCliente(int codigo){
+        BdClientes bdc= new BdClientes();
+        String sql = "select * from animais where dono = '" + codigo +"'";
+        ArrayList lista = new ArrayList();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                Animal registro = new Animal();
+                registro.setCodigo(rs.getInt("codigo"));
+                registro.setNome(rs.getString("nome"));
+                registro.setRaca(rs.getString("raca"));
+                registro.setIdade(rs.getInt("idade"));
+                registro.setPorte(rs.getString("porte"));
+                Clientes.Cliente result = bdc.localizaCodigoNome(rs.getInt("dono"));
+                registro.setNameDono(result.getNome());
+                lista.add(registro);
+            }           
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        return lista;
+    }
+    
+    
+    public Animal localizaNomeCodigo(String busca){
+        String sql = "select * from animais where nome='" + busca + "'";
+        Animal registro = new Animal();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs  = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setDono(rs.getInt("dono"));
+                
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+        return registro;
+    }
+    
 }
