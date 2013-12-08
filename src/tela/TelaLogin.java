@@ -190,7 +190,6 @@ public class TelaLogin extends javax.swing.JFrame {
             email.setSubject("Recuperação de Senha do Sistema");
             email.setMsg("Seu Login é:" + login + "\n Sua Senha é:" + senha);
             email.setSmtpPort(465);
-            //email.setAuthentication("robsonjean96@gmail.com", "09142311");
             email.setAuthenticator(new DefaultAuthenticator("psquatropatas@gmail.com", "4pataspet"));
             email.getMailSession().getProperties().put("mail.smtp.auth", "true");
             email.getMailSession().getProperties().put("mail.debug", "true");
