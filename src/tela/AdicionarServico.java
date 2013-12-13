@@ -6,34 +6,31 @@
 
 package tela;
 
-import Produtos.BdProdutos;
 import Produtos.Produto;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
-import tela.TelaVendaProdutos;
+
 /**
  *
  * @author robson
  */
-public class AdicionarProduto extends javax.swing.JFrame {
-    BdProdutos bdp = new BdProdutos();
+public class AdicionarServico extends javax.swing.JFrame {
+    BdServicos bdp = new BdServicos();
     /**
-     * Creates new form AdicionarProduto
+     * Creates new form AdicionarServico
      */
-    public AdicionarProduto() {
+    public AdicionarServico() {
         initComponents();
     }
     
     private void preencheComboProduto(){
-        ArrayList c = bdp.pesquisa("");
+        ArrayList c = bdc.pesquisa("");
         for(Iterator it = c.iterator(); it.hasNext();){
-            Produtos.Produto p = (Produto) it.next();
-            comboDescricao.addItem(p.getDescricao);
+            Servicos.Servico s = (Servico) it.next();
+            comboDescricao.addItem(s.getDescricao);
         }
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,38 +41,16 @@ public class AdicionarProduto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        tQtde = new javax.swing.JTextField();
+        comboDescricao = new javax.swing.JComboBox();
+        tValor = new javax.swing.JTextField();
+        tCodigo = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        tValor = new javax.swing.JTextField();
-        comboDescricao = new javax.swing.JComboBox();
-        jLabel4 = new javax.swing.JLabel();
-        tCodigo = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        tQtde.setText("1");
-        tQtde.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tQtdeKeyPressed(evt);
-            }
-        });
-
-        jButton1.setText("Adicionar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setText("Descrição");
-
-        jLabel2.setText("Quantidade");
-
-        jLabel3.setText("Preço");
 
         comboDescricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -87,6 +62,17 @@ public class AdicionarProduto extends javax.swing.JFrame {
 
         jButton2.setText("Cancelar");
 
+        jLabel3.setText("Preço");
+
+        jButton1.setText("Adicionar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Descrição");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -94,10 +80,6 @@ public class AdicionarProduto extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(tQtde, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -107,16 +89,15 @@ public class AdicionarProduto extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(tCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton1)
-                            .addComponent(tValor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(88, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton2)
-                .addGap(62, 62, 62))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)
+                                .addComponent(tValor, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(44, 44, 44)
+                        .addComponent(jButton2)))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,41 +112,32 @@ public class AdicionarProduto extends javax.swing.JFrame {
                     .addComponent(comboDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(tQtde, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(tValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1))
-                .addContainerGap(66, Short.MAX_VALUE))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void comboDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDescricaoActionPerformed
+        Servico servico = bdp.localiza((String) comboDescricao.getSelectedItem());
+        tCodigo.setText(Integer.toString(servico.getCodigo));
+        tValor.setText(Double.toString(servico.getPreco));
+    }//GEN-LAST:event_comboDescricaoActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         DefaultTableModel modelo = (DefaultTableModel) tela.TelaVendaProdutos.tProdutos.getModel();
         String valor = tValor.getText().replaceAll(",", ".");
         valor = valor.replaceAll(",", ".");
-        modelo.addRow(new Object[]{ tCodigo.getText(), comboDescricao.getSelectedItem(), tQtde.getText(), valor, ""});
-        tela.TelaVendaProdutos.calcSubTotUnit();
-        tela.TelaVendaProdutos.contaTotal();
+        modelo.addRow(new Object[]{ tCodigo.getText(), comboDescricao.getSelectedItem(),  valor});
+        tela.TelaVendaServicos.contaTotal();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void tQtdeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tQtdeKeyPressed
-        
-    }//GEN-LAST:event_tQtdeKeyPressed
-
-    private void comboDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDescricaoActionPerformed
-        Produto prod = bdp.localiza((String) comboDescricao.getSelectedItem());
-        tCodigo.setText(Integer.toString(prod.getCodigo));
-        tValor.setText(Double.toString(prod.getPreco));
-    }//GEN-LAST:event_comboDescricaoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -184,20 +156,20 @@ public class AdicionarProduto extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdicionarServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdicionarServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdicionarServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdicionarProduto.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AdicionarServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdicionarProduto().setVisible(true);
+                new AdicionarServico().setVisible(true);
             }
         });
     }
@@ -207,11 +179,9 @@ public class AdicionarProduto extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JTextField tCodigo;
-    private javax.swing.JTextField tQtde;
     private javax.swing.JTextField tValor;
     // End of variables declaration//GEN-END:variables
 }

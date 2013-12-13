@@ -22,7 +22,7 @@ public class BdVendaProduto extends Bd.bd {
     }
     
     public void insere(VendaProduto vendap){
-        String sql = "insert into lanc_venda(codigo_cliente,codigo_animal, data, hora, total) values (?,?,?,?,?)";
+        String sql = "insert into LV (codigo_cliente,codigo_animal, data, hora, total) values (?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1,vendap.getCodigocliente());

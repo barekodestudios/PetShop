@@ -71,6 +71,24 @@ public class TelaVendaProdutos extends javax.swing.JFrame {
             comboAnimal.addItem(a.getNome());
         }
     }
+    
+    private void preencheComboCliente(String nome){
+        ArrayList c = bdc.pesquisa("");
+        for (Iterator it = c.iterator(); it.hasNext();){
+            Clientes.Cliente a = (Cliente) it.next();
+            comboCliente.addItem(a.getNome());
+        }
+        comboCliente.setSelectedItem(nome);
+    }
+    
+    private void preencheComboAnimal(String animal){
+        ArrayList c = bda.pesquisaPorCliente(codigoCliente);
+        for(Iterator it = c.iterator(); it.hasNext();){
+            Animais.Animal a = (Animal) it.next();
+            comboAnimal.addItem(a.getNome());
+        }
+        comboCliente.setSelectedItem(animal);
+    }
   
     public static void calcSubTotUnit(){
         DefaultTableModel modelo = (DefaultTableModel) tProdutos.getModel();
@@ -91,6 +109,32 @@ public class TelaVendaProdutos extends javax.swing.JFrame {
         vendap.setTotal(Double.parseDouble(tTotal.getText()));
         vendap.setData(getDate());
         vendap.setHora(getTime());
+        
+    }
+    
+    private void vendaProdutoToTela(){
+        codigoAnimal = vendap.getCodigoAnimal();
+        Animal animal = bda.localiza(codigoAnimal);
+        preencheComboAnimal(animal.getNome());
+        codigoCliente = vendap.getCodigocliente();
+        Cliente cliente = bdc.localizaCodigoNome(codigoCliente);
+        preencheComboCliente(cliente.getNome());
+        tTotal.setText(Double.toString(vendap.getTotal()));
+        
+        
+        
+    }
+    
+    private void preencheTabela(int codigoVenda){
+        DefaultTableModel modelo = (DefaultTableModel) tProdutos.getModel();
+        int i = modelo.getRowCount();
+        while(i-- > 0){
+            modelo.removeRow(i);
+        }
+        ArrayList c = bdlp.localizaVenda(codigoVenda);
+        for(Iterator it = c.iterator(); it.hasNext();){
+            //necessita fazer as classes de lançamento de venda de produto e bdlancvendaproduto;
+        }
         
     }
     
