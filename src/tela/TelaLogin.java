@@ -52,6 +52,7 @@ public class TelaLogin extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login - Sistema PetShop");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setMaximumSize(new java.awt.Dimension(0, 0));
         setResizable(false);
@@ -181,14 +182,14 @@ public class TelaLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     public void sendEmail(String mail, String login, String senha) throws EmailException{
-        boolean erro;
+        boolean erro = false;
         try{
             SimpleEmail email = new SimpleEmail();
             email.setHostName("smtp.gmail.com");
             email.addTo(mail);
             email.setFrom("psquatropatas@gmail.com", "Sistema PetShop");
             email.setSubject("Recuperação de Senha do Sistema");
-            email.setMsg("Seu Login é:" + login + "\n Sua Senha é:" + senha);
+            email.setMsg(" Seu Login é: " + login + "\n Sua Senha é: " + senha);
             email.setSmtpPort(465);
             email.setAuthenticator(new DefaultAuthenticator("psquatropatas@gmail.com", "4pataspet"));
             email.getMailSession().getProperties().put("mail.smtp.auth", "true");

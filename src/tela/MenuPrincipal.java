@@ -28,6 +28,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        bVendaServico = new javax.swing.JButton();
+        bVendaProduto = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -45,6 +47,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de controle e gerenciamento PetShop");
         setResizable(false);
+
+        bVendaServico.setText("Venda Serviço");
+        bVendaServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVendaServicoActionPerformed(evt);
+            }
+        });
+
+        bVendaProduto.setText("Venda Produto");
 
         jMenu1.setText("Clientes");
 
@@ -112,11 +123,21 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1155, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(bVendaServico)
+                .addGap(18, 18, 18)
+                .addComponent(bVendaProduto)
+                .addContainerGap(892, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 554, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(bVendaServico)
+                    .addComponent(bVendaProduto))
+                .addContainerGap(498, Short.MAX_VALUE))
         );
 
         pack();
@@ -145,6 +166,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         t.setVisible(true);
         
     }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void bVendaServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVendaServicoActionPerformed
+       TelaVendaServicos t = new TelaVendaServicos();
+       t.setVisible(true);
+    }//GEN-LAST:event_bVendaServicoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -182,6 +208,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bVendaProduto;
+    private javax.swing.JButton bVendaServico;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;

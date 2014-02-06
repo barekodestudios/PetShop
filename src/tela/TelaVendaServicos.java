@@ -10,6 +10,11 @@ import Animais.Animal;
 import Animais.BdAnimal;
 import Clientes.BdClientes;
 import Clientes.Cliente;
+import Servicos.BdServico;
+import Vendas.BdVendaServico;
+import Vendas.LS.BdLancServ;
+import Vendas.LS.LancServ;
+import Vendas.VendaServico;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,17 +30,27 @@ import javax.swing.table.DefaultTableModel;
 public class TelaVendaServicos extends javax.swing.JFrame {
     VendaServico vendas = new VendaServico();
     BdVendaServico bdvs = new BdVendaServico();
+    BdLancServ bdls = new BdLancServ();
     BdClientes bdc = new BdClientes();
     BdAnimal bda = new BdAnimal();
     private boolean novo = true;
     private int codigoCliente = 0;
     private int codigoAnimal = 0;
+    private int codigoVenda = 0;
     
     /**
      * Creates new form TelaVendaServicos
      */
     public TelaVendaServicos() {
         initComponents();
+        if(novo){
+            preencheComboNovoCliente();
+        }
+        if(!novo){
+            preencheTabela(codigoVenda);
+            jButton1.setEnabled(false);
+            bConcluiVenda.setEnabled(false);
+        }
     }
     
      private String getDate(){
@@ -91,10 +106,13 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         double total = 0;
         for(int r = 0; r < i; r++) {
             //double valor = 0;
-            double valor = (double) modelo.getValueAt(r, 4);
+            double valor = (double) modelo.getValueAt(r, 2);
             
             total += valor;
-           tTotal.setText( Double.toString(total));    
+           tTotal.setText(Double.toString(total));    
+        }
+        if(i == 0){
+            tTotal.setText("");
         }
     }
         
@@ -105,21 +123,37 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         int i = modelo.getRowCount();
         while(i-- > 0){
             modelo.removeRow(i);
-        }
-        ArrayList c = bdls.localizaVenda(codigoVenda);
+        }       
+        ArrayList c = bdls.listVenda(codigoVenda);
         for(Iterator it = c.iterator(); it.hasNext();){
-            //necessita fazer as classes de lançamento de venda de produto e bdlancvendaproduto;
+            LancServ ls = (LancServ) it.next();
+            int codigo = ls.getCodigo_servico();
+            BdServico bds = new BdServico();
+            Servicos.Servico srv = bds.localiza(codigo);
+            modelo.addRow(new Object[]{ls.getCodigo_servico(), srv.getNome(), ls.getPreco()});
         }
         
     }
     
     private void telaToVendaServico(){
-        
+        vendas.setCodigocliente(codigoCliente);
+        vendas.setCodigoAnimal(codigoAnimal);
+        vendas.setData(getDate());
+        vendas.setHora(getTime());
+        vendas.setTotal(Double.parseDouble(tTotal.getText()));
     }
-        
-        
     
-
+    private void getTableItens(int codVenda){
+        LancServ ls = new LancServ();
+        DefaultTableModel modelo = (DefaultTableModel) tServicos.getModel();
+        int  i = modelo.getRowCount();
+        for(int r = 0; r < i; r++){
+            ls.setCodigo_venda(codVenda);
+            ls.setCodigo_servico(Integer.parseInt((String) modelo.getValueAt(r, 0)));
+            ls.setPreco((double) modelo.getValueAt(r, 2));
+            bdls.insere(ls);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -142,7 +176,8 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         bConcluiVenda = new javax.swing.JButton();
         bExclui = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Venda de Serviços");
+        setResizable(false);
 
         jLabel1.setText("Cliente:");
 
@@ -278,7 +313,8 @@ public class TelaVendaServicos extends javax.swing.JFrame {
                         .addGap(22, 22, 22))))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(672, 559));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboAnimalItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboAnimalItemStateChanged
@@ -299,9 +335,11 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         int linha = (Integer) tServicos.getSelectedRow();
         try{
             modelo.removeRow(linha);
+            
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "Uma linha deve ser selecionada!");
         }
+        contaTotal();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -310,11 +348,19 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void bConcluiVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bConcluiVendaActionPerformed
-        telaToVendaServico();
-        if(novo){
-            bdvs.insere(vendas);
-        }else{
-            //  bdvs.atualiza(vendas);
+ 
+        DefaultTableModel modelo = (DefaultTableModel) tServicos.getModel();
+        if(modelo.getRowCount() != 0){
+            telaToVendaServico();
+            if(novo){
+                bdvs.insere(vendas);
+                VendaServico codVenda = bdvs.localiza(vendas.getData(), vendas.getHora());
+                getTableItens(codVenda.getCodigo());
+            }else{
+                bdvs.atualiza(vendas);
+            }
+        }else if(modelo.getRowCount() == 0 ){
+            JOptionPane.showMessageDialog(null, "Não foi adicionado nenhum serviço nesta venda!!" );
         }
         this.dispose();
     }//GEN-LAST:event_bConcluiVendaActionPerformed

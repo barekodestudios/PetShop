@@ -7,6 +7,8 @@
 package tela;
 
 import Produtos.Produto;
+import Servicos.BdServico;
+import Servicos.Servico;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.swing.table.DefaultTableModel;
@@ -16,19 +18,20 @@ import javax.swing.table.DefaultTableModel;
  * @author robson
  */
 public class AdicionarServico extends javax.swing.JFrame {
-    BdServicos bdp = new BdServicos();
+    BdServico bds = new BdServico();
     /**
      * Creates new form AdicionarServico
      */
     public AdicionarServico() {
         initComponents();
+        preencheComboServico();
     }
     
-    private void preencheComboProduto(){
-        ArrayList c = bdc.pesquisa("");
+    private void preencheComboServico(){
+        ArrayList c = bds.pesquisa("");
         for(Iterator it = c.iterator(); it.hasNext();){
             Servicos.Servico s = (Servico) it.next();
-            comboDescricao.addItem(s.getDescricao);
+            comboDescricao.addItem(s.getNome());
         }
     }
 
@@ -125,15 +128,16 @@ public class AdicionarServico extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDescricaoActionPerformed
-        Servico servico = bdp.localiza((String) comboDescricao.getSelectedItem());
-        tCodigo.setText(Integer.toString(servico.getCodigo));
-        tValor.setText(Double.toString(servico.getPreco));
+        Servico servico = bds.localizaNome((String) comboDescricao.getSelectedItem());
+        tCodigo.setText(Integer.toString(servico.getCodigo()));
+        tValor.setText(Double.toString(servico.getPreco()));
     }//GEN-LAST:event_comboDescricaoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        DefaultTableModel modelo = (DefaultTableModel) tela.TelaVendaProdutos.tProdutos.getModel();
-        String valor = tValor.getText().replaceAll(",", ".");
-        valor = valor.replaceAll(",", ".");
+        DefaultTableModel modelo = (DefaultTableModel) tela.TelaVendaServicos.tServicos.getModel();
+        double valor = Double.parseDouble(tValor.getText().replaceAll(",", "."));
+        
+        //valor = valor.replaceAll(",", ".");
         modelo.addRow(new Object[]{ tCodigo.getText(), comboDescricao.getSelectedItem(),  valor});
         tela.TelaVendaServicos.contaTotal();
         this.dispose();

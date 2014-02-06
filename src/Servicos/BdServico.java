@@ -48,7 +48,7 @@ public class BdServico extends Bd.bd{
     }
     
     public ArrayList pesquisa(String descricao){
-        String sql = "select * from servico where descricao='"+ descricao +"'";
+        String sql = "select * from servico where descricao like'%" + descricao +"%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -66,7 +66,7 @@ public class BdServico extends Bd.bd{
         }
         return lista;
     }
-    
+        
     public Servico localiza(int codigo){
         String sql = "select * from servico where codigo='" +codigo+"'";
         Servico registro = new Servico();
@@ -75,6 +75,23 @@ public class BdServico extends Bd.bd{
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
                 registro.setCodigo(rs.getInt("codigo"));
+                registro.setNome(rs.getString("descricao"));
+                registro.setPreco(rs.getDouble("preco"));
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+        return registro;
+    }
+    
+    public Servico localizaNome(String nome){
+        String sql = "select * from servico where descricao ='" +nome+"'";
+        Servico registro = new Servico();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setCodigo(rs.getInt("Codigo"));
                 registro.setNome(rs.getString("descricao"));
                 registro.setPreco(rs.getDouble("preco"));
             }

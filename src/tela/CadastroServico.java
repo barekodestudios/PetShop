@@ -54,7 +54,7 @@ public class CadastroServico extends javax.swing.JFrame {
         bSalva = new javax.swing.JButton();
         tCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Serviço");
 
         jLabel1.setText("Código");
 
@@ -132,6 +132,7 @@ public class CadastroServico extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void bSalvaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bSalvaActionPerformed

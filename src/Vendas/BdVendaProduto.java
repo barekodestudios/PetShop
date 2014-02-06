@@ -22,7 +22,7 @@ public class BdVendaProduto extends Bd.bd {
     }
     
     public void insere(VendaProduto vendap){
-        String sql = "insert into LV (codigo_cliente,codigo_animal, data, hora, total) values (?,?,?,?,?)";
+        String sql = "insert into LVP (codigo_cliente,codigo_animal, data, hora, total) values (?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1,vendap.getCodigocliente());
@@ -33,6 +33,19 @@ public class BdVendaProduto extends Bd.bd {
             ps.execute();
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
+        }
+    }
+    
+    public void atualiza(VendaProduto vendap){
+        String sql ="update LVP set codigo_cliente = ?, codigo_animal = ?, total = ? where codigo = ?";
+        try{
+            PreparedStatement  ps = getCon().prepareStatement(sql);
+            ps.setInt(1, vendap.getCodigocliente());
+            ps.setInt(2, vendap.getCodigoAnimal());
+            ps.setDouble(3, vendap.getTotal());
+            ps.execute();
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
         }
     }
 }

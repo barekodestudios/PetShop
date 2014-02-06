@@ -90,7 +90,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         bSalvar = new javax.swing.JButton();
         bCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Cadastro de Animal");
 
         jLabel1.setText("Cliente");
 
@@ -208,6 +208,7 @@ public class CadastroAnimal extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void comboClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_comboClienteItemStateChanged

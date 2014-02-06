@@ -298,7 +298,7 @@ public class TelaVendaProdutos extends javax.swing.JFrame {
         if(novo){
             bdvp.insere(vendap);
         }else{
-            //  bdvp.atualiza(vendap);
+            bdvp.atualiza(vendap);
         }
         this.dispose();
     }//GEN-LAST:event_bConcluiVendaActionPerformed
