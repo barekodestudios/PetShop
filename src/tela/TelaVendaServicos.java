@@ -93,7 +93,7 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     
     
     
-    public static void contaTotal(){
+    public static  void contaTotal(){
         DefaultTableModel modelo = (DefaultTableModel) tServicos.getModel();
         int i = modelo.getRowCount();
         double total = 0;
@@ -104,7 +104,7 @@ public class TelaVendaServicos extends javax.swing.JFrame {
             total += valor;
            tTotal.setText(Double.toString(total));    
         }
-        if(i == 0){
+        if(i == 0){ 
             tTotal.setText("");
         }
     }
@@ -293,11 +293,12 @@ public class TelaVendaServicos extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(chkCadastro)
                 .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(comboAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4)
-                    .addComponent(tCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tCliente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(comboAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)))
                 .addContainerGap())
         );
 
@@ -478,6 +479,6 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel tCliente;
     public static javax.swing.JTable tServicos;
-    private javax.swing.JLabel tTotal;
+    private static javax.swing.JLabel tTotal;
     // End of variables declaration//GEN-END:variables
 }
