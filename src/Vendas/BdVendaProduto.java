@@ -27,7 +27,7 @@ public class BdVendaProduto extends Bd.bd {
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1,vendap.getCodigocliente());
             ps.setInt(2, vendap.getCodigoAnimal());
-            ps.setString(3, vendap.getData());
+            ps.setDate(3, new java.sql.Date(vendap.getData().getTime().getTime()));
             ps.setString(4, vendap.getHora());
             ps.setDouble(5, vendap.getTotal());
             ps.execute();

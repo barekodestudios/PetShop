@@ -6,6 +6,8 @@
 
 package Vendas;
 
+import java.util.Calendar;
+
 /**
  *
  * @author robson
@@ -14,9 +16,13 @@ public class VendaServico {
     private int codigo;
     private int codigocliente;
     private int codigoAnimal;
-    private String data;
+    private int codigoFinanceiro;
+
+    
+    private Calendar data;
     private String hora;
     private double total;
+    
 
     /**
      * @return the codigo
@@ -63,14 +69,14 @@ public class VendaServico {
     /**
      * @return the data
      */
-    public String getData() {
+    public Calendar  getData() {
         return data;
     }
 
     /**
      * @param data the data to set
      */
-    public void setData(String data) {
+    public void setData(Calendar data) {
         this.data = data;
     }
 
@@ -100,5 +106,12 @@ public class VendaServico {
      */
     public void setTotal(double total) {
         this.total = total;
+    }
+    public void setCodigoFinanceiro(int codigoFinanceiro) {
+        this.codigoFinanceiro = codigoFinanceiro;
+    }
+
+    public int getCodigoFinanceiro() {
+        return codigoFinanceiro;
     }
 }

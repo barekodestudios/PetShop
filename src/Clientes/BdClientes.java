@@ -23,7 +23,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public void insere(Cliente cliente){
-        String sql = "insert into clientes(nome, cpf, rg, telefone, celular, endereco, bairro, cep, cidade, estado, complemento, datacadastro) values (?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into Cliente(nome, cpf, rg, telefone, celular, endereco, bairro, cep, cidade, estado, complemento, datacadastro) values (?,?,?,?,?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, cliente.getNome());
@@ -37,7 +37,7 @@ public class BdClientes extends Bd.bd {
             ps.setString(9, cliente.getCidade());
             ps.setString(10, cliente.getEstado());
             ps.setString(11, cliente.getComplemento());
-            ps.setString(12, cliente.getDatacadastro());
+            ps.setDate(12, new java.sql.Date(cliente.getDatacadastro().getTime().getTime()));
             ps.execute();
             
         }catch (SQLException e){
@@ -47,7 +47,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public void atualiza(Cliente cliente){
-        String sql = "update clientes set nome=?, cpf=?, rg=?, telefone = ?, Celular=?, endereco=?, bairro=?, cep=?, cidade=?, estado=?, complemento=? where codigo=?";
+        String sql = "update Cliente set nome=?, cpf=?, rg=?, telefone = ?, Celular=?, endereco=?, bairro=?, cep=?, cidade=?, estado=?, complemento=? where codigo=?";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, cliente.getNome());
@@ -70,7 +70,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public void exclui(int codigo){
-        String sql = "delete from clientes where codigo=?";
+        String sql = "delete from Cliente where codigo=?";
         try{
             Statement st = getCon().createStatement();
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -82,7 +82,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public ArrayList pesquisa(String busca){
-        String sql = "select * from clientes where nome like  '%" + busca + "%'";
+        String sql = "select * from Cliente where nome like  '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -101,7 +101,7 @@ public class BdClientes extends Bd.bd {
                 registro.setCidade(rs.getString("cidade"));
                 registro.setEstado(rs.getString("estado"));
                 registro.setComplemento(rs.getString("complemento"));
-                registro.setDatacadastro(rs.getString("datacadastro"));
+                registro.getDatacadastro().setTime(rs.getDate("datacadastro"));
                 
                 lista.add(registro);
             }
@@ -112,7 +112,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public Cliente localizaCodigoNome(int codigo){
-        String sql = "select * from clientes where codigo='" + codigo + "'";
+        String sql = "select * from Cliente where codigo='" + codigo + "'";
         Cliente registro = new Cliente();
         try{
             Statement st = getCon().createStatement();
@@ -127,7 +127,7 @@ public class BdClientes extends Bd.bd {
     }
     
     public Cliente localizaNomeCodigo(String nome){
-        String sql = "select * from clientes where nome='" + nome + "'";
+        String sql = "select * from Cliente where nome='" + nome + "'";
         Cliente registro = new Cliente();
         try{
             Statement st = getCon().createStatement();
@@ -142,7 +142,7 @@ public class BdClientes extends Bd.bd {
     }
     
      public Cliente localiza(int codigo){
-        String sql = "select * from clientes where codigo='" + codigo + "'";
+        String sql = "select * from Cliente where codigo='" + codigo + "'";
         Cliente registro = new Cliente();
         try{
             Statement st = getCon().createStatement();
@@ -160,7 +160,7 @@ public class BdClientes extends Bd.bd {
                 registro.setCidade(rs.getString("cidade"));
                 registro.setEstado(rs.getString("estado"));
                 registro.setComplemento(rs.getString("complemento"));
-                registro.setDatacadastro(rs.getString("datacadastro"));
+                registro.getDatacadastro().setTime(rs.getDate("datacadastro"));
             }
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    

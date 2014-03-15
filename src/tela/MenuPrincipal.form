@@ -97,6 +97,10 @@
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
     <SyntheticProperty name="generateCenter" type="boolean" value="true"/>
   </SyntheticProperties>
+  <Events>
+    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyPressed"/>
+    <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="formKeyReleased"/>
+  </Events>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
@@ -117,7 +121,7 @@
               <Component id="bVendaServico" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="bVendaProduto" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="892" max="32767" attributes="0"/>
+              <EmptySpace pref="852" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -137,16 +141,22 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="bVendaServico">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Venda Servi&#xe7;o"/>
+        <Property name="text" type="java.lang.String" value="Venda Servi&#xe7;o(F3)"/>
+        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVendaServicoActionPerformed"/>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="bVendaServicoKeyPressed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="bVendaProduto">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Venda Produto"/>
+        <Property name="text" type="java.lang.String" value="Venda Produto(F4)"/>
+        <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bVendaProdutoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

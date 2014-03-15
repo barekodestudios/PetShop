@@ -35,12 +35,12 @@ public class BdLancServ extends Bd.bd{
         }
     }
     
-    public void exclui(int codigo){
-        String sql = "delete from LS where codigo = ?";
+    public void exclui(int codigoVenda){
+        String sql = "delete from LS where codigo_venda = ?";
         try{
             Statement st = getCon().createStatement();
             PreparedStatement ps = getCon().prepareStatement(sql);
-            ps.setInt(1, codigo);
+            ps.setInt(1, codigoVenda);
             ps.execute();
         }catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());

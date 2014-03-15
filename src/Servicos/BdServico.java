@@ -23,7 +23,7 @@ public class BdServico extends Bd.bd{
         }
     }
     public void insere(Servico servico){
-        String sql = "insert into servico(nome,preco) values(?,?)";
+        String sql = "insert into Servico(nome,preco) values(?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, servico.getNome());
@@ -35,7 +35,7 @@ public class BdServico extends Bd.bd{
     }
     
     public void atualiza(Servico servico){
-        String sql = "update servico set nome=?, preco=?,  where codigo =?";
+        String sql = "update Servico set descricao=?, preco=?,  where codigo =?";
         try{
             PreparedStatement ps  = getCon().prepareStatement(sql);
             ps.setString(1, servico.getNome());
@@ -48,7 +48,7 @@ public class BdServico extends Bd.bd{
     }
     
     public ArrayList pesquisa(String descricao){
-        String sql = "select * from servico where descricao like'%" + descricao +"%'";
+        String sql = "select * from Servico where descricao like'%" + descricao +"%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -68,7 +68,7 @@ public class BdServico extends Bd.bd{
     }
         
     public Servico localiza(int codigo){
-        String sql = "select * from servico where codigo='" +codigo+"'";
+        String sql = "select * from Servico where codigo='" +codigo+"'";
         Servico registro = new Servico();
         try{
             Statement st = getCon().createStatement();
@@ -85,7 +85,7 @@ public class BdServico extends Bd.bd{
     }
     
     public Servico localizaNome(String nome){
-        String sql = "select * from servico where descricao ='" +nome+"'";
+        String sql = "select * from Servico where descricao ='" +nome+"'";
         Servico registro = new Servico();
         try{
             Statement st = getCon().createStatement();

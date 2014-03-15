@@ -5,6 +5,8 @@
  */
 package Clientes;
 
+import java.util.Calendar;
+
 /**
  *
  * @author robson
@@ -22,7 +24,7 @@ public class Cliente {
     private String cidade;
     private String estado;
     private String complemento;
-    private String datacadastro;
+    private Calendar datacadastro;
 
     /**
      * @return the codigo
@@ -195,14 +197,14 @@ public class Cliente {
     /**
      * @return the datacadastro
      */
-    public String getDatacadastro() {
+    public Calendar getDatacadastro() {
         return datacadastro;
     }
 
     /**
      * @param datacadastro the datacadastro to set
      */
-    public void setDatacadastro(String datacadastro) {
+    public void setDatacadastro(Calendar datacadastro) {
         this.datacadastro = datacadastro;
     }
 }

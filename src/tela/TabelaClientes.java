@@ -10,6 +10,7 @@ import Clientes.Cliente;
 import javax.swing.table.DefaultTableModel;
 import Clientes.BdClientes;
 import java.awt.Point;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -39,9 +40,9 @@ public class TabelaClientes extends javax.swing.JFrame {
         ArrayList c = bd.pesquisa(tFiltro.getText()); 
         for (Iterator it = c.iterator(); it.hasNext();) { 
             Clientes.Cliente a = (Cliente) it.next(); 
+            SimpleDateFormat s = new SimpleDateFormat("dd/MM/yyyy");
             modelo.addRow(new Object[]{a.getNome(), a.getRg(), a.getCpf(), 
-            a.getTelefone(), a.getCelular(), a.getEndereco(), a.getBairro(),
-            a.getCidade(), a.getEstado(),a.getCep(), a.getComplemento(), a.getDatacadastro(),
+            a.getTelefone(), a.getCelular(), a.getEndereco(), a.getBairro(), s.format(a.getDatacadastro().getTime()),
             a.getCodigo()});
         }
     }

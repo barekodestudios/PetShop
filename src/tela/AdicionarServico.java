@@ -61,9 +61,16 @@ public class AdicionarServico extends javax.swing.JFrame {
             }
         });
 
+        tCodigo.setEditable(false);
+
         jLabel4.setText("Código");
 
         jButton2.setText("Cancelar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Preço");
 
@@ -142,6 +149,10 @@ public class AdicionarServico extends javax.swing.JFrame {
         tela.TelaVendaServicos.contaTotal();
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

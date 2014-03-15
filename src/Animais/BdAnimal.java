@@ -24,7 +24,7 @@ public class BdAnimal extends Bd.bd {
        }
     }
     public void insere(Animal animal){
-        String sql = "insert into animais(nome, raca, idade, porte, dono) values(?,?,?,?,?)";
+        String sql = "insert into Animal(nome, raca, idade, porte, dono) values(?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, animal.getNome());
@@ -39,7 +39,7 @@ public class BdAnimal extends Bd.bd {
     }
     
     public void atualiza(Animal animal){
-        String sql ="update animais set nome=?, raca=?, idade=?, porte=?, dono=? where codigo=?";
+        String sql ="update Animal set nome=?, raca=?, idade=?, porte=?, dono=? where codigo=?";
         try{
            PreparedStatement ps = getCon().prepareStatement(sql);
            ps.setString(1, animal.getNome());
@@ -54,7 +54,7 @@ public class BdAnimal extends Bd.bd {
     }
     
     public void excluir(int codigo){
-        String sql = "delete from animais where codigo=?";
+        String sql = "delete from Animal where codigo=?";
         try{
             Statement st = getCon().createStatement();
             PreparedStatement ps = getCon().prepareStatement(sql);
@@ -67,7 +67,7 @@ public class BdAnimal extends Bd.bd {
     
     public ArrayList pesquisa(String busca){
         BdClientes bdc= new BdClientes();
-        String sql = "select * from animais where nome like '%" + busca + "%'";
+        String sql = "select * from Animal where nome like '%" + busca + "%'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -90,7 +90,7 @@ public class BdAnimal extends Bd.bd {
     }
     
     public Animal localiza(int codigo){
-        String sql = "select * from animais where codigo ='" + codigo +"'";
+        String sql = "select * from Animal where codigo ='" + codigo +"'";
         Animal registro = new Animal();
         try{
             Statement st = getCon().createStatement();
@@ -112,7 +112,7 @@ public class BdAnimal extends Bd.bd {
     
     public ArrayList pesquisaPorCliente(int codigo){
         BdClientes bdc= new BdClientes();
-        String sql = "select * from animais where dono = '" + codigo +"'";
+        String sql = "select * from Animal where dono = '" + codigo +"'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -136,7 +136,7 @@ public class BdAnimal extends Bd.bd {
     
     
     public Animal localizaNomeCodigo(String busca){
-        String sql = "select * from animais where nome='" + busca + "'";
+        String sql = "select * from Animal where nome='" + busca + "'";
         Animal registro = new Animal();
         try{
             Statement st = getCon().createStatement();

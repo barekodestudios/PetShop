@@ -6,6 +6,7 @@
 package tela;
 
 
+import Animais.Animal;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,16 +15,31 @@ import java.text.SimpleDateFormat;
  * @author robson
  */
 import Clientes.Cliente;
+import Util.Estado.BdEstado;
+import Util.Estado.Estado;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
+import javax.swing.JOptionPane;
 
 public class CadastroCliente extends javax.swing.JFrame {
     private Cliente cliente = new Cliente();
     private boolean novo = true;
     Clientes.BdClientes bd;
     
-    private String getDateTime(){
+    private void getDateTime(){
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        Date date = new Date();
-        return dateFormat.format(date);
+        Calendar data = Calendar.getInstance();
+        txtData.setText(dateFormat.format(data.getTime()));
+    }
+    
+    private void preencheComboEstado(){
+        BdEstado bde = new BdEstado();
+        ArrayList c  = bde.pesquisa();
+        for(Iterator it = c.iterator(); it.hasNext();){
+            Estado a = (Estado) it.next();
+            tEstado.addItem(a.getNome());
+        }
     }
     
      private void telaToCliente(){
@@ -37,9 +53,17 @@ public class CadastroCliente extends javax.swing.JFrame {
          getCliente().setBairro(txtBairro.getText());
          getCliente().setCep(txtCEP.getText());
          getCliente().setCidade(txtCidade.getText());
-         getCliente().setEstado(txtEstado.getText());
+         getCliente().setEstado((String) tEstado.getSelectedItem());
          getCliente().setComplemento(txtComplemento.getText());
-         getCliente().setDatacadastro(getDateTime());
+         try{
+             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+             Calendar data = Calendar.getInstance();
+             data.setTime(dateFormat.parse(txtData.getText()));
+             getCliente().setDatacadastro(data);
+         }catch(Exception e){
+             JOptionPane.showMessageDialog(null, "Erro de Conversão de Data!");
+         }
+         
      
      }
      
@@ -54,11 +78,11 @@ public class CadastroCliente extends javax.swing.JFrame {
          txtBairro.setText(getCliente().getBairro());
          txtCEP.setText(getCliente().getCep());
          txtCidade.setText(getCliente().getCidade());
-         txtEstado.setText(getCliente().getEstado());
+         tEstado.setSelectedItem(getCliente().getEstado());
          txtComplemento.setText(getCliente().getComplemento());
-         txtData.setText(getCliente().getDatacadastro());
-                
-                 
+         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+         Calendar data = Calendar.getInstance();
+         txtData.setText(dateFormat.format(data.getTime()));
      }
     /**
      * Creates new form CadastroCliente
@@ -67,7 +91,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         initComponents();
         bd = new Clientes.BdClientes();
         if(novo){
-            txtData.setText(getDateTime());
+            getDateTime();
+            preencheComboEstado();
         }
     }
 
@@ -95,12 +120,10 @@ public class CadastroCliente extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtNome = new javax.swing.JTextField();
-        txtRG = new javax.swing.JTextField();
         txtBairro = new javax.swing.JTextField();
         txtEndereco = new javax.swing.JTextField();
         txtCidade = new javax.swing.JTextField();
         txtComplemento = new javax.swing.JTextField();
-        txtEstado = new javax.swing.JTextField();
         txtData = new javax.swing.JFormattedTextField();
         txtFixo = new javax.swing.JFormattedTextField();
         txtCelular = new javax.swing.JFormattedTextField();
@@ -108,6 +131,8 @@ public class CadastroCliente extends javax.swing.JFrame {
         txtCPF = new javax.swing.JFormattedTextField();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
+        tEstado = new javax.swing.JComboBox();
+        txtRG = new javax.swing.JFormattedTextField();
 
         jLabel1.setText("Código");
 
@@ -140,12 +165,6 @@ public class CadastroCliente extends javax.swing.JFrame {
         txtCodigo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtCodigoActionPerformed(evt);
-            }
-        });
-
-        txtRG.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtRGActionPerformed(evt);
             }
         });
 
@@ -218,6 +237,13 @@ public class CadastroCliente extends javax.swing.JFrame {
             }
         });
 
+        try {
+            txtRG.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        txtRG.setToolTipText("Digite o RG sem dar espaços.");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -249,16 +275,16 @@ public class CadastroCliente extends javax.swing.JFrame {
                             .addComponent(txtData, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtCelular)
                             .addComponent(txtFixo)
-                            .addComponent(txtRG)
                             .addComponent(txtCodigo)
                             .addComponent(txtCPF, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                             .addComponent(txtComplemento)
                             .addComponent(txtCEP, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(txtEstado)
                             .addComponent(txtCidade)
                             .addComponent(txtBairro)
                             .addComponent(txtNome, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
-                            .addComponent(txtEndereco))))
+                            .addComponent(txtEndereco)
+                            .addComponent(tEstado, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtRG))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -303,7 +329,7 @@ public class CadastroCliente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -342,10 +368,6 @@ public class CadastroCliente extends javax.swing.JFrame {
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
-
-    private void txtRGActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRGActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtRGActionPerformed
 
     private void txtCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCPFActionPerformed
         // TODO add your handling code here:
@@ -417,6 +439,7 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JComboBox tEstado;
     private javax.swing.JTextField txtBairro;
     private javax.swing.JFormattedTextField txtCEP;
     private javax.swing.JFormattedTextField txtCPF;
@@ -426,10 +449,9 @@ public class CadastroCliente extends javax.swing.JFrame {
     private javax.swing.JTextField txtComplemento;
     private javax.swing.JFormattedTextField txtData;
     private javax.swing.JTextField txtEndereco;
-    private javax.swing.JTextField txtEstado;
     private javax.swing.JFormattedTextField txtFixo;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtRG;
+    private javax.swing.JFormattedTextField txtRG;
     // End of variables declaration//GEN-END:variables
 
     /**

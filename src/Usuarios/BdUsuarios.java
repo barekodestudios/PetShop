@@ -20,7 +20,7 @@ public class BdUsuarios extends Bd.bd{
         }
     }
     public void insere(Usuario usuario){
-        String sql = "insert into usuarios(nome, email, tipo, login ,senha) values(?,?,?,?,?)";
+        String sql = "insert into usuario(nome, email, tipo, login ,senha) values(?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, usuario.getNome());
@@ -35,7 +35,7 @@ public class BdUsuarios extends Bd.bd{
     }
     
     public void atualiza(Usuario usuario){
-        String sql = "update usuarios set nome=?, email=?, tipo=?, login=?, senha=? where codigo=?";
+        String sql = "update usuario set nome=?, email=?, tipo=?, login=?, senha=? where codigo=?";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setString(1, usuario.getNome());
@@ -52,7 +52,7 @@ public class BdUsuarios extends Bd.bd{
     }
     
     public Usuario localiza(String login, String senha){
-        String sql = "select login,senha from usuarios where login='" + login + "' and senha='" + senha + "'";
+        String sql = "select login,senha from usuario where login='" + login + "' and senha='" + senha + "'";
         Usuarios.Usuario registro = new Usuario();
         try{
             Statement st = getCon().createStatement();
@@ -69,7 +69,7 @@ public class BdUsuarios extends Bd.bd{
     }
     
     public Usuario localizaMail(String email){
-        String sql = "select email,login,senha from usuarios where email = '" + email + "'";
+        String sql = "select email,login,senha from usuario where email = '" + email + "'";
         Usuarios.Usuario registro = new Usuario();
         try{
             Statement st = getCon().createStatement();

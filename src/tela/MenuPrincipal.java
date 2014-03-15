@@ -6,6 +6,8 @@
 
 package tela;
 
+import java.awt.event.KeyEvent;
+
 /**
  *
  * @author Rafael
@@ -47,15 +49,35 @@ public class MenuPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Sistema de controle e gerenciamento PetShop");
         setResizable(false);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                formKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                formKeyReleased(evt);
+            }
+        });
 
-        bVendaServico.setText("Venda Serviço");
+        bVendaServico.setText("Venda Serviço(F3)");
+        bVendaServico.setFocusable(false);
         bVendaServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bVendaServicoActionPerformed(evt);
             }
         });
+        bVendaServico.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bVendaServicoKeyPressed(evt);
+            }
+        });
 
-        bVendaProduto.setText("Venda Produto");
+        bVendaProduto.setText("Venda Produto(F4)");
+        bVendaProduto.setFocusable(false);
+        bVendaProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bVendaProdutoActionPerformed(evt);
+            }
+        });
 
         jMenu1.setText("Clientes");
 
@@ -128,7 +150,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addComponent(bVendaServico)
                 .addGap(18, 18, 18)
                 .addComponent(bVendaProduto)
-                .addContainerGap(892, Short.MAX_VALUE))
+                .addContainerGap(852, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,6 +193,29 @@ public class MenuPrincipal extends javax.swing.JFrame {
        TelaVendaServicos t = new TelaVendaServicos();
        t.setVisible(true);
     }//GEN-LAST:event_bVendaServicoActionPerformed
+
+    private void formKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyReleased
+        
+    }//GEN-LAST:event_formKeyReleased
+
+    private void bVendaProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bVendaProdutoActionPerformed
+        TelaVendaProdutos t = new TelaVendaProdutos();
+        t.setVisible(true);
+    }//GEN-LAST:event_bVendaProdutoActionPerformed
+
+    private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
+        if(evt.getKeyCode() == KeyEvent.VK_F3){
+            TelaVendaServicos t = new TelaVendaServicos();
+            t.setVisible(true);
+        } else if(evt.getKeyCode() == KeyEvent.VK_F4){
+            TelaVendaProdutos t = new TelaVendaProdutos();
+            t.setVisible(true);
+        }
+    }//GEN-LAST:event_formKeyPressed
+
+    private void bVendaServicoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bVendaServicoKeyPressed
+        
+    }//GEN-LAST:event_bVendaServicoKeyPressed
 
     /**
      * @param args the command line arguments
