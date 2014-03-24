@@ -7,6 +7,7 @@ package tela;
 
 
 import Animais.Animal;
+import Clientes.Cliente;
 import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -14,7 +15,7 @@ import java.text.SimpleDateFormat;
  *
  * @author robson
  */
-import Clientes.Cliente;
+
 import Util.Estado.BdEstado;
 import Util.Estado.Estado;
 import java.util.ArrayList;
