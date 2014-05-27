@@ -142,6 +142,7 @@ public class BdAnimal extends Bd.bd {
             Statement st = getCon().createStatement();
             ResultSet rs  = st.executeQuery(sql);
             if(rs.next()){
+                registro.setCodigo(rs.getInt("codigo"));
                 registro.setDono(rs.getInt("dono"));
                 
             }

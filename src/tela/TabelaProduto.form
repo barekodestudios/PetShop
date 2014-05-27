@@ -86,11 +86,16 @@
         <Component class="javax.swing.JComboBox" name="cmbBusca">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="5">
                 <StringItem index="0" value="C&#xf3;digo"/>
                 <StringItem index="1" value="C&#xf3;digo EAN"/>
                 <StringItem index="2" value="Descri&#xe7;&#xe3;o"/>
+                <StringItem index="3" value="Todos"/>
+                <StringItem index="4" value=" "/>
               </StringArray>
+            </Property>
+            <Property name="selectedItem" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+              <Connection code="&quot;Todos&quot;" type="code"/>
             </Property>
           </Properties>
           <Events>
@@ -98,6 +103,9 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="tBusca">
+          <Properties>
+            <Property name="text" type="java.lang.String" value=" "/>
+          </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="bOk">
           <Properties>

@@ -16,6 +16,9 @@ public class VendaProduto {
     private int codigo;
     private int codigocliente;
     private int codigoAnimal;
+    private int codigoFinanceiro;
+    
+    
     private Calendar data;
     private String hora;
     private double total;
@@ -102,6 +105,20 @@ public class VendaProduto {
      */
     public void setCodigoAnimal(int codigoAnimal) {
         this.codigoAnimal = codigoAnimal;
+    }
+
+    /**
+     * @return the codigoFinanceiro
+     */
+    public int getCodigoFinanceiro() {
+        return codigoFinanceiro;
+    }
+
+    /**
+     * @param codigoFinanceiro the codigoFinanceiro to set
+     */
+    public void setCodigoFinanceiro(int codigoFinanceiro) {
+        this.codigoFinanceiro = codigoFinanceiro;
     }
     
 }

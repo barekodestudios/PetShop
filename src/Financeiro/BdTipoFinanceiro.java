@@ -68,7 +68,7 @@ public class BdTipoFinanceiro extends Bd.bd {
     }
     
     public TipoLancamento localizaByCodigo(int codigo){
-        String sql = "SELECT * FROM Tipo_Lanc WHERE lancamento='" + codigo + "'";
+        String sql = "SELECT * FROM Tipo_Lanc WHERE codigo='"+codigo+"'";
         TipoLancamento tl = new TipoLancamento();
         try{
             Statement st = getCon().createStatement();
@@ -86,7 +86,7 @@ public class BdTipoFinanceiro extends Bd.bd {
     }
     
     public ArrayList pesquisa(String es){
-        String sql = "SELECT * FROM Tipo_Lanc WHERE es="+es;
+        String sql = "SELECT * FROM Tipo_Lanc WHERE es='"+es+"'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();

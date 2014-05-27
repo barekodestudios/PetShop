@@ -8,11 +8,15 @@ package tela;
 
 import Animais.Animal;
 import Animais.BdAnimal;
+import Caixa.BdCaixa;
+import Caixa.caixa;
 import Clientes.BdClientes;
 import Clientes.Cliente;
 import Financeiro.BdFinanceiro;
+import Produtos.BdProdutos;
 import Servicos.BdServico;
 import Servicos.Servico;
+import Util.Caixa.Calculos;
 import Vendas.BdVendaServico;
 import Vendas.LS.BdLancServ;
 import Vendas.LS.LancServ;
@@ -31,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
  * @author robson
  */
 public class TelaVendaServicos extends javax.swing.JFrame {
-    VendaServico vendas = new VendaServico();
+    private VendaServico vendas = new VendaServico();
     BdVendaServico bdvs = new BdVendaServico();
     BdLancServ bdls = new BdLancServ();
     BdClientes bdc = new BdClientes();
@@ -48,17 +52,19 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         initComponents();
         if(novo){
             preencheComboNovoAnimal();
-            
-        }
-        if(!novo){
-            jButton1.setEnabled(false);
-            bConcluiVenda.setEnabled(false);
-            chkCadastro.setEnabled(false);
-            comboAnimal.setEnabled(false);
-            tCliente.setEnabled(false);
-            jButton2.setEnabled(false);
-            preencheTabela(codigoVenda);
-            preencheComboAnimal();
+            if(!verificaCaixa()){
+                JOptionPane.showMessageDialog(this, "O caixa ainda não foi aberto hoje!");
+                
+            }
+        }//else
+    }
+    
+    private boolean verificaCaixa(){
+        BdCaixa bdc = new BdCaixa();
+        if(!bdc.localizaVenda(getDate(), true)){
+            return false;
+        }else{
+            return true;
         }
     }
     
@@ -113,16 +119,16 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         
     private void preencheTabela(int codigoVenda){
         DefaultTableModel modelo = (DefaultTableModel) tServicos.getModel();
-        int i = modelo.getRowCount();
+           int i = modelo.getRowCount();
         while(i-- > 0){
             modelo.removeRow(i);
-        }       
-        ArrayList c = bdls.listVenda(codigoVenda);
-        for(Iterator it = c.iterator(); it.hasNext();){
+        }
+        ArrayList l = bdls.listVenda(codigoVenda);
+        for(Iterator it = l.iterator(); it.hasNext();){
             LancServ ls = (LancServ) it.next();
-            int codigo = ls.getCodigo_servico();
             BdServico bds = new BdServico();
-            Servicos.Servico srv = bds.localiza(codigo);
+            Servicos.Servico srv = bds.localiza(ls.getCodigo_servico());
+           
             modelo.addRow(new Object[]{ls.getCodigo_servico(), srv.getNome(), ls.getPreco()});
         }
         
@@ -130,22 +136,31 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     
     private void telaToVendaServico(){
         if(chkCadastro.isSelected() == true){
-            vendas.setCodigocliente(codigoCliente);
-            vendas.setCodigoAnimal(codigoAnimal);
+            getVendas().setCodigocliente(codigoCliente);
+            getVendas().setCodigoAnimal(codigoAnimal);
         } else {
-            vendas.setCodigocliente(0);
-            vendas.setCodigocliente(0);
+            getVendas().setCodigocliente(0);
+            getVendas().setCodigocliente(0);
         }
-        vendas.setData(getDate());
-        vendas.setHora(getTime());
-        vendas.setTotal(Double.parseDouble(tTotal.getText()));
+        getVendas().setData(getDate());
+        getVendas().setHora(getTime());
+        getVendas().setTotal(Double.parseDouble(tTotal.getText()));
     }
     
     private void VendaServicoToTela(){
-        codigoVenda = vendas.getCodigo();
-        codigoCliente  = vendas.getCodigocliente();
-        codigoAnimal = vendas.getCodigoAnimal();
-        tTotal.setText(Double.toString(vendas.getTotal()));
+        codigoVenda = getVendas().getCodigo();
+        codigoCliente  = getVendas().getCodigocliente();
+        codigoAnimal = getVendas().getCodigoAnimal();
+        tTotal.setText(Double.toString(getVendas().getTotal()));
+           
+             jButton1.setEnabled(false);
+            bConcluiVenda.setEnabled(false);
+            chkCadastro.setEnabled(false);
+            comboAnimal.setEnabled(false);
+            tCliente.setEnabled(false);
+            jButton2.setEnabled(false);
+            preencheTabela(codigoVenda);
+            preencheComboAnimal();
     }
     
     
@@ -161,8 +176,9 @@ public class TelaVendaServicos extends javax.swing.JFrame {
         }
     }
     
+    
     private void insereFinanceiroVenda(){
-        ConcluiPagamentoVenda t = new ConcluiPagamentoVenda();
+        ConcluiPagamentoVendaServico t = new ConcluiPagamentoVendaServico();
         t.tValor.setText(tTotal.getText());
         t.tAnimal.setText((String) comboAnimal.getSelectedItem());
         t.tCliente.setText(tCliente.getText());
@@ -394,12 +410,14 @@ public class TelaVendaServicos extends javax.swing.JFrame {
  
         DefaultTableModel modelo = (DefaultTableModel) tServicos.getModel();
         if(modelo.getRowCount() != 0){
-            telaToVendaServico();
-            if(novo){
-                //bdvs.insere(vendas);
-                VendaServico codVenda = bdvs.localiza(vendas.getData(), vendas.getHora());
-                //getTableItens(codVenda.getCodigo());
-                insereFinanceiroVenda();
+            
+            if(isNovo()){
+                telaToVendaServico();
+                bdvs.insere(getVendas());
+                VendaServico codVenda = bdvs.localiza(getVendas().getData(), getVendas().getHora());
+                getTableItens(codVenda.getCodigo());
+                codigoVenda = codVenda.getCodigo();
+                insereFinanceiroVenda();    
                 this.dispose();
             /*}else{
                 bdvs.atualiza(vendas);
@@ -414,9 +432,18 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     private void bExcluiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bExcluiActionPerformed
         BdFinanceiro bdf = new BdFinanceiro();
         VendaServico vs = bdvs.localizaCodigo(codigoVenda);
+        Financeiro.financeiro f = bdf.localizaCodigo(vs.getCodigoFinanceiro());
+       //Para excluir venda apenas no mesmo dia, e ainda tem que fazer com que o Caixa(saldo)
+        //seja atualizado reduzindo o valor da venda;
+        BdCaixa bdcx= new BdCaixa();
+        caixa cx = new caixa();
+        cx = bdcx.localiza(f.getData(), false, true);
+        cx.setSaldo(Calculos.calculo(cx.getSaldo(), f.getValor(), false));
+        bdcx.atualiza(cx);
         bdf.exclui(vs.getCodigoFinanceiro());
         bdls.exclui(codigoVenda);
-       bdvs.exclui(codigoVenda);
+        bdvs.exclui(codigoVenda);
+        this.dispose();
        //em venda de produto tem que adicionar a quantidade no estoque novamente e ai sim excluir o bdlp;
     }//GEN-LAST:event_bExcluiActionPerformed
 
@@ -481,4 +508,33 @@ public class TelaVendaServicos extends javax.swing.JFrame {
     public static javax.swing.JTable tServicos;
     private static javax.swing.JLabel tTotal;
     // End of variables declaration//GEN-END:variables
+
+    /**
+     * @return the vendas
+     */
+    public VendaServico getVendas() {
+        return vendas;
+    }
+
+    /**
+     * @param vendas the vendas to set
+     */
+    public void setVendas(VendaServico vendas) {
+        this.vendas = vendas;
+        VendaServicoToTela();
+    }
+
+    /**
+     * @return the novo
+     */
+    public boolean isNovo() {
+        return novo;
+    }
+
+    /**
+     * @param novo the novo to set
+     */
+    public void setNovo(boolean novo) {
+        this.novo = novo;
+    }
 }

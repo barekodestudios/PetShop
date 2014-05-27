@@ -11,6 +11,7 @@ package Vendas;
  * @author robson
  */
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 public class BdVendaServico extends Bd.bd {
@@ -23,7 +24,7 @@ public class BdVendaServico extends Bd.bd {
     }
     
     public void insere(VendaServico vendas){
-        String sql = "insert into LVS (codigo_cliente,codigo_animal, data, hora, total) values (?,?,?,?,?)";
+        String sql = "insert into LVS (codigo_cliente,codigo_animal, data, hora, total, codigo_financeiro) values (?,?,?,?,?,?)";
         try{
             PreparedStatement ps = getCon().prepareStatement(sql);
             ps.setInt(1,vendas.getCodigocliente());
@@ -31,6 +32,7 @@ public class BdVendaServico extends Bd.bd {
             ps.setDate(3, new java.sql.Date(vendas.getData().getTime().getTime()));
             ps.setString(4, vendas.getHora());
             ps.setDouble(5, vendas.getTotal());
+            ps.setInt(6, 0);
             ps.execute();
         } catch(SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());
@@ -78,7 +80,7 @@ public class BdVendaServico extends Bd.bd {
     }
     
     public VendaServico localiza(Calendar data, String hora){
-        String sql = "select * from LVS where data ='" + data +"' and hora = '" + hora +"'";
+        String sql = "select * from LVS where data='"+new java.sql.Date(data.getTime().getTime())+"' and hora='"+hora+"'";
         VendaServico registro = new VendaServico();
         try{
             Statement st = getCon().createStatement();
@@ -95,18 +97,49 @@ public class BdVendaServico extends Bd.bd {
     
     public VendaServico localizaCodigo(int codigo){
         String sql = "select * from LVS where codigo='"+codigo+"'";
-        VendaServico registro = new VendaServico();
+        VendaServico vs = new VendaServico();
         try{
             Statement st = getCon().createStatement();
             ResultSet rs = st.executeQuery(sql);
             if(rs.next()){
-                registro.setCodigo(rs.getInt("codigo"));
-                registro.setCodigoFinanceiro(rs.getInt("codigo_financeiro"));
+                vs.setCodigo(rs.getInt("codigo"));
+                vs.setCodigoAnimal(rs.getInt("codigo_animal"));
+                vs.setCodigocliente(rs.getInt("codigo_cliente"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("data"));
+                vs.setData(data);
+                vs.setHora(rs.getString("hora"));
+                vs.setTotal(rs.getDouble("total"));
+                vs.setCodigoFinanceiro(rs.getInt("codigo_financeiro"));
             }
    
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
         }
-        return registro;
+        return vs;
+    }
+    
+    public ArrayList pesquisa(){
+        String sql ="select * from LVS";
+        ArrayList lista = new ArrayList();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                VendaServico vs = new VendaServico();
+                vs.setCodigo(rs.getInt("codigo"));
+                vs.setCodigoAnimal(rs.getInt("codigo_animal"));
+                vs.setCodigocliente(rs.getInt("codigo_cliente"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("data"));
+                vs.setData(data);
+                vs.setHora(rs.getString("hora"));
+                vs.setTotal(rs.getDouble("total"));
+                lista.add(vs);
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+        return lista;
     }
 }

@@ -12,6 +12,7 @@ package Clientes;
 import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 public class BdClientes extends Bd.bd {
     public BdClientes(){
@@ -160,7 +161,9 @@ public class BdClientes extends Bd.bd {
                 registro.setCidade(rs.getString("cidade"));
                 registro.setEstado(rs.getString("estado"));
                 registro.setComplemento(rs.getString("complemento"));
-                registro.getDatacadastro().setTime(rs.getDate("datacadastro"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("datacadastro"));
+                registro.setDatacadastro(data);
             }
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL:" +e.getMessage());    

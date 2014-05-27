@@ -10,6 +10,7 @@ package Bd;
  * @author robson
  */
 import java.sql.*;
+import javax.swing.JOptionPane;
 public class bd {
    private Connection con;
    private String driver;
@@ -19,9 +20,9 @@ public class bd {
    private String erro;
    public bd(){
        this.setDriver("com.mysql.jdbc.Driver");
-       this.setUrl("jdbc:mysql://rankposto.sytes.net/PetShop");
-       this.setUsuario("root");
-       this.setSenha("vertrigo");
+       this.setUrl("jdbc:mysql://192.168.1.10/PetShop");
+       this.setUsuario("posto");
+       this.setSenha("123rede456");
        this.setErro("");
        this.setCon(null);
    }
@@ -33,6 +34,14 @@ public class bd {
            this.setErro("Erro na conexao\n" + e.getMessage());
            throw e;
            
+       }
+   }
+   
+   public void fecha(){
+       try{
+           con.close();
+       }catch(Exception e){
+           JOptionPane.showMessageDialog(null, "Erro ao fechar conexão/n" + e.getMessage());
        }
    }
    

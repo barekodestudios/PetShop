@@ -29,7 +29,7 @@ public class AdicionarProduto extends javax.swing.JFrame {
         ArrayList c = bdp.pesquisa("");
         for(Iterator it = c.iterator(); it.hasNext();){
             Produtos.Produto p = (Produto) it.next();
-            comboDescricao.addItem(p.getDescricao);
+            comboDescricao.addItem(p.getDescricao());
         }
     }
     
@@ -160,9 +160,9 @@ public class AdicionarProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_tQtdeKeyPressed
 
     private void comboDescricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDescricaoActionPerformed
-        Produto prod = bdp.localiza((String) comboDescricao.getSelectedItem());
-        tCodigo.setText(Integer.toString(prod.getCodigo));
-        tValor.setText(Double.toString(prod.getPreco));
+        Produto prod = bdp.localizaDesc((String) comboDescricao.getSelectedItem());
+        tCodigo.setText(Integer.toString(prod.getCodigo()));
+        tValor.setText(Double.toString(prod.getPrVenda()));
     }//GEN-LAST:event_comboDescricaoActionPerformed
 
     /**

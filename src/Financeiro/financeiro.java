@@ -14,6 +14,7 @@ import java.util.Calendar;
 public class financeiro {
     private int codigo;
     private double valor;
+    private String descricao;
     private int tipo;
     private String es;
     private Calendar data;
@@ -101,6 +102,20 @@ public class financeiro {
      */
     public void setHora(String hora) {
         this.hora = hora;
+    }
+
+    /**
+     * @return the descricao
+     */
+    public String getDescricao() {
+        return descricao;
+    }
+
+    /**
+     * @param descricao the descricao to set
+     */
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
 
 }

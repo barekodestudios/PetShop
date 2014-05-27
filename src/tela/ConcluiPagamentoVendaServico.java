@@ -6,10 +6,12 @@
 
 package tela;
 
+import Caixa.BdCaixa;
 import Financeiro.BdFinanceiro;
 import Financeiro.BdTipoFinanceiro;
 import Financeiro.TipoLancamento;
 import Financeiro.financeiro;
+import Util.Caixa.Calculos;
 import Vendas.BdVendaServico;
 import Vendas.VendaServico;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import javax.swing.JOptionPane;
  *
  * @author robson
  */
-public class ConcluiPagamentoVenda extends javax.swing.JFrame {
+public class ConcluiPagamentoVendaServico extends javax.swing.JFrame {
         Financeiro.financeiro finc = new Financeiro.financeiro();
         
     /**
@@ -30,14 +32,15 @@ public class ConcluiPagamentoVenda extends javax.swing.JFrame {
     private Calendar data;
     private String hora;
     private int codigoVenda;
-    public ConcluiPagamentoVenda() {
+    public ConcluiPagamentoVendaServico() {
         initComponents();
+        preencheCombo();
     }
     
     
     private void preencheCombo(){
         BdTipoFinanceiro bdtf = new BdTipoFinanceiro();
-        ArrayList c = bdtf.pesquisa("e");
+        ArrayList c = bdtf.pesquisa("E");
         for(Iterator it = c.iterator(); it.hasNext();){
             TipoLancamento tl = (TipoLancamento) it.next();
             cmbMPag.addItem(tl.getLancamento());
@@ -60,6 +63,7 @@ public class ConcluiPagamentoVenda extends javax.swing.JFrame {
         finc.setValor(Double.parseDouble(tValor.getText()));
         finc.setData(getData());
         finc.setHora(getHora());
+        finc.setDescricao("Venda :" + codigoVenda);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -193,12 +197,19 @@ public class ConcluiPagamentoVenda extends javax.swing.JFrame {
         VendaServico vs = new VendaServico();
         financeiro f = new financeiro();
         BdVendaServico bdvs = new BdVendaServico();
+        BdCaixa bdc = new BdCaixa();
         telaToFinanceiro();
         bdf.insere(finc);
+        
         f = bdf.localiza(data,hora);
         vs.setCodigo(codigoVenda);
         vs.setCodigoFinanceiro(f.getCodigo());
         bdvs.atualizaCodFinc(vs);//vai por o codigo do pagamento na venda.
+        
+        Caixa.caixa cx = bdc.localiza(data, false, true);
+        double result = Calculos.calculo(cx.getSaldo(), finc.getValor(), true); //true = adição
+        cx.setSaldo(result);
+        bdc.atualiza(cx);
         JOptionPane.showMessageDialog(null, "Venda Concluida com Sucesso!");
         this.dispose();
     }//GEN-LAST:event_bConcluiActionPerformed
@@ -212,7 +223,7 @@ public class ConcluiPagamentoVenda extends javax.swing.JFrame {
     }//GEN-LAST:event_cmbMPagActionPerformed
 
     private void cmbMPagItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMPagItemStateChanged
-       
+        
     }//GEN-LAST:event_cmbMPagItemStateChanged
 
     /**
@@ -232,20 +243,20 @@ public class ConcluiPagamentoVenda extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ConcluiPagamentoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConcluiPagamentoVendaServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ConcluiPagamentoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConcluiPagamentoVendaServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ConcluiPagamentoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConcluiPagamentoVendaServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ConcluiPagamentoVenda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ConcluiPagamentoVendaServico.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ConcluiPagamentoVenda().setVisible(true);
+                new ConcluiPagamentoVendaServico().setVisible(true);
             }
         });
     }

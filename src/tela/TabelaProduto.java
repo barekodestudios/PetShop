@@ -57,6 +57,14 @@ public class TabelaProduto extends javax.swing.JFrame {
                     modelo.addRow(new Object[]{p.getCodigo(), p.getEan(), p.getUn(), p.getDescricao(), p.getPrVenda(), p.getPrCusto(), p.getEstmin(), sdf.format(p.getDatacad())});
                 }
                 break;
+            case "Todos":
+                 ArrayList descs = bdp.pesquisaAll();
+                for(Iterator it = descs.iterator(); it.hasNext();){
+                    Produto p = (Produto) it.next();
+                    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); 
+                    modelo.addRow(new Object[]{p.getCodigo(), p.getEan(), p.getUn(), p.getDescricao(), p.getPrVenda(), p.getPrCusto(), p.getEstmin(), sdf.format(p.getDatacad())});
+                }
+                break;
         }
     }
     
@@ -84,12 +92,15 @@ public class TabelaProduto extends javax.swing.JFrame {
 
         jLabel1.setText("Buscar");
 
-        cmbBusca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Código EAN", "Descrição" }));
+        cmbBusca.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Código", "Código EAN", "Descrição", "Todos", " " }));
+        cmbBusca.setSelectedItem("Todos");
         cmbBusca.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cmbBuscaItemStateChanged(evt);
             }
         });
+
+        tBusca.setText(" ");
 
         bOk.setText("Ok");
         bOk.addActionListener(new java.awt.event.ActionListener() {

@@ -6,8 +6,10 @@
 
 package Vendas.LP;
 
+import Vendas.LS.LancServ;
 import javax.swing.JOptionPane;
 import java.sql.*;
+import java.util.ArrayList;
 /**
  *
  * @author robson
@@ -37,6 +39,35 @@ public class BdLancProd extends Bd.bd{
         }
     }
     
+    
+    public ArrayList listVenda(int codigoVenda){
+        String sql = "select * from LS where codigo_venda =" + codigoVenda;
+        ArrayList lista = new ArrayList();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            while(rs.next()){
+                LancServ registro = new LancServ();
+                registro.setCodigo_servico(rs.getInt("codigo_servico"));
+                registro.setPreco(rs.getDouble("preco"));                
+                
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+        return lista;
+    }
+    
+    public void exclui(int codigo){
+        String sql = "delete from LS where codigo_venda=?";
+        try {
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.execute();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+    }
     
     
 }

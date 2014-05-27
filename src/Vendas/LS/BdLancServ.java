@@ -49,7 +49,7 @@ public class BdLancServ extends Bd.bd{
     }
     
     public ArrayList listVenda(int codigoVenda){
-        String sql = "select * from LS where codigo_venda =" + codigoVenda;
+        String sql = "select * from LS where codigo_venda='"+codigoVenda+"'";
         ArrayList lista = new ArrayList();
         try{
             Statement st = getCon().createStatement();
@@ -57,8 +57,8 @@ public class BdLancServ extends Bd.bd{
             while(rs.next()){
                 LancServ registro = new LancServ();
                 registro.setCodigo_servico(rs.getInt("codigo_servico"));
-                registro.setPreco(rs.getDouble("preco"));                
-                
+                registro.setPreco(rs.getDouble("preco"));
+                lista.add(registro);
             }
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());

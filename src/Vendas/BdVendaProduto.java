@@ -11,6 +11,7 @@ package Vendas;
  * @author robson
  */
 import java.sql.*;
+import java.util.Calendar;
 import javax.swing.JOptionPane;
 public class BdVendaProduto extends Bd.bd {
     public BdVendaProduto(){
@@ -47,5 +48,56 @@ public class BdVendaProduto extends Bd.bd {
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
         }
+    }
+    
+    public void exclui(int codigo){
+        String sql = "delete from LVP where codigo_venda=?";
+        try{
+            PreparedStatement ps = getCon().prepareStatement(sql);
+            ps.setInt(1, codigo);
+            ps.execute();
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+    }
+    
+     public VendaProduto localizaCodigo(int codigo){
+        String sql = "select * from LVP where codigo='"+codigo+"'";
+        VendaProduto vp = new VendaProduto();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                vp.setCodigo(rs.getInt("codigo"));
+                vp.setCodigoAnimal(rs.getInt("codigo_animal"));
+                vp.setCodigocliente(rs.getInt("codigo_cliente"));
+                Calendar data = Calendar.getInstance();
+                data.setTime(rs.getDate("data"));
+                vp.setData(data);
+                vp.setHora(rs.getString("hora"));
+                vp.setTotal(rs.getDouble("total"));
+                vp.setCodigoFinanceiro(rs.getInt("codigo_financeiro"));
+            }
+   
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+        return vp;
+    }
+     
+     public VendaProduto localiza(Calendar data, String hora){
+        String sql = "select * from LVP where data='"+new java.sql.Date(data.getTime().getTime())+"' and hora='"+hora+"'";
+        VendaProduto registro = new VendaProduto();
+        try{
+            Statement st = getCon().createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            if(rs.next()){
+                registro.setCodigo(rs.getInt("codigo"));
+            }
+   
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, "Erro SQL: " +e.getMessage());
+        }
+        return registro;
     }
 }
