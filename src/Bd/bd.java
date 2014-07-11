@@ -20,7 +20,7 @@ public class bd {
    private String erro;
    public bd(){
        this.setDriver("com.mysql.jdbc.Driver");
-       this.setUrl("jdbc:mysql://192.168.1.10/PetShop");
+       this.setUrl("jdbc:mysql://rankposto.sytes.net:3306/PetShop");
        this.setUsuario("posto");
        this.setSenha("123rede456");
        this.setErro("");
